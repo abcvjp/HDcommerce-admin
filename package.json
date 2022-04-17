@@ -1,0 +1,73 @@
+{
+  "name": "webshop-admin",
+  "author": "abcvjp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
+    "@material-ui/core": "^5.0.0-alpha.28",
+    "@material-ui/icons": "^5.0.0-alpha.28",
+    "@material-ui/styles": "^5.0.0-alpha.5",
+    "axios": "^0.21.1",
+    "chart.js": "^2.9.4",
+    "clsx": "^1.1.1",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
+    "firebase": "^8.9.1",
+    "formik": "^2.1.5",
+    "history": "^5.0.0",
+    "html-to-draftjs": "^1.5.0",
+    "immutable": "^3.8.2",
+    "install": "^0.13.0",
+    "lodash": "^4.17.19",
+    "moment": "^2.27.0",
+    "npm": "^7.7.4",
+    "nprogress": "^0.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-aws-s3": "^1.5.0",
+    "react-chartjs-2": "^2.10.0",
+    "react-csv": "^2.0.3",
+    "react-dom": "^17.0.2",
+    "react-draft-wysiwyg": "^1.14.7",
+    "react-dropzone": "^11.3.4",
+    "react-feather": "^2.0.8",
+    "react-helmet": "^6.1.0",
+    "react-perfect-scrollbar": "^1.5.8",
+    "react-redux": "^7.2.4",
+    "react-router": "^6.0.0-beta.0",
+    "react-router-dom": "^6.0.0-beta.0",
+    "react-scripts": "^4.0.0",
+    "redux": "^4.1.1",
+    "slugify": "^1.6.0",
+    "uninstall": "^0.0.0",
+    "uuid": "^8.3.0",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1"
+  }
+}
