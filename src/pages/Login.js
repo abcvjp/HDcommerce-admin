@@ -27,11 +27,11 @@ const Login = () => {
 
   const handleLoginWithEmailPassword = async (values) => {
     try {
-      const response = await API.post('/user/login', values); // eslint-disable-line
-      const { user, access_token } = response.data;
+      const response = await API.post('/auth/login', values); // eslint-disable-line
+      const { user, accessToken } = response.data.data;
       if (user && user.role === Role.Admin) {
         dispatch(setUser(user));
-        localStorage.setItem('access_token', access_token);
+        localStorage.setItem('access_token', accessToken);
         navigate('/management/dashboard', { replace: true });
       } else {
         setError('Your account does not have permission to access');
@@ -115,7 +115,7 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'toidaidot@yahoo.com',
+              email: 'hoaideptrai@example.com',
               password: '123456'
             }}
             validationSchema={Yup.object().shape({

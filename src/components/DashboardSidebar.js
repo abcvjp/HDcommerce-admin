@@ -106,13 +106,13 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {user.username}
+          {user.fullName}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {user.full_name}
+          {user.email}
         </Typography>
       </Box>
       <Divider />
