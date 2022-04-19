@@ -31,11 +31,10 @@ const UserListFilter = () => {
       initialValues={{ ...state.filters }}
       validationSchema={Yup.object().shape({
         id: Yup.string().uuid(),
-        username: Yup.string().trim().min(4).max(20),
         email: Yup.string().trim().email(),
-        full_name: Yup.string().trim().min(1).max(50),
-        phone_number: Yup.string().length(10).matches(/^[0-9]+$/),
-        enable: Yup.bool()
+        fullName: Yup.string().trim().min(1).max(50),
+        phoneNumber: Yup.string().min(7).matches(/^[0-9]+$/),
+        isEnabled: Yup.bool()
       })}
       onSubmit={(values) => dispatch({ type: 'SET_FILTERS', filters: values })}
     >
@@ -65,35 +64,19 @@ const UserListFilter = () => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item key="username" className={classes.field}>
+            <Grid item key="fullName" className={classes.field}>
               <TextField
-                error={Boolean(touched.username && errors.username)}
+                error={Boolean(touched.fullName && errors.fullName)}
                 fullWidth
-                helperText={touched.username && errors.username}
-                label="Username"
-                name="username"
-                margin="dense"
-                size="small"
-                username="username"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.username}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item key="full_name" className={classes.field}>
-              <TextField
-                error={Boolean(touched.full_name && errors.full_name)}
-                fullWidth
-                helperText={touched.full_name && errors.full_name}
+                helperText={touched.fullName && errors.fullName}
                 label="Customer name"
-                name="full_name"
+                name="fullName"
                 margin="dense"
                 size="small"
-                full_name="full_name"
+                fullName="fullName"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.full_name}
+                value={values.fullName}
                 variant="outlined"
               />
             </Grid>
@@ -113,35 +96,35 @@ const UserListFilter = () => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item key="phone_number" className={classes.field}>
+            <Grid item key="phoneNumber" className={classes.field}>
               <TextField
-                error={Boolean(touched.phone_number && errors.phone_number)}
+                error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                 fullWidth
-                helperText={touched.phone_number && errors.phone_number}
+                helperText={touched.phoneNumber && errors.phoneNumber}
                 label="Phone number"
-                name="phone_number"
+                name="phoneNumber"
                 margin="dense"
                 size="small"
-                phone_number="phone_number"
+                phoneNumber="phoneNumber"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.phone_number}
+                value={values.phoneNumber}
                 variant="outlined"
               />
             </Grid>
-            <Grid item key="enable" className={classes.field}>
+            <Grid item key="isEnabled" className={classes.field}>
               <TextField
-                error={Boolean(touched.enable && errors.enable)}
-                helperText={touched.enable && errors.enable}
-                label="Enable"
-                name="enable"
+                error={Boolean(touched.isEnabled && errors.isEnabled)}
+                helperText={touched.isEnabled && errors.isEnabled}
+                label="Enabled"
+                name="isEnabled"
                 margin="dense"
                 size="small"
                 fullWidth
                 select
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.enable}
+                value={values.isEnabled}
                 variant="outlined"
               >
                 {enableOptions.map((option) => (

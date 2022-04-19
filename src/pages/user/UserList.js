@@ -16,10 +16,9 @@ const initialState = {
   filters: {
     id: '',
     email: '',
-    username: '',
-    full_name: '',
-    phone_number: '',
-    enable: undefined
+    fullName: '',
+    phoneNumber: '',
+    isEnabled: undefined
   },
   sort: '',
   isLoading: false
@@ -113,15 +112,15 @@ const UserList = () => {
       const { filters } = state;
       try {
         const response = await userApi.getUsers({
-          current_page: state.currentPage + 1,
-          page_size: state.pageSize,
+          skip: state.currentPage * state.pageSize,
+          limit: state.pageSize,
           ...filters,
           sort: state.sort
         });
         dispatch({
           type: 'SET_USERS',
-          users: response.data.data,
-          count: response.data.pagination.count
+          users: response.data.data.records,
+          count: response.data.data.count
         });
       } catch (err) {
         console.log(err);

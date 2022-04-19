@@ -47,7 +47,7 @@ const UserListResults = () => {
     let newSelectedUserIds;
 
     if (event.target.checked) {
-      newSelectedUserIds = users.map((user) => user.id);
+      newSelectedUserIds = users.map((user) => user._id);
     } else {
       newSelectedUserIds = [];
     }
@@ -113,13 +113,10 @@ const UserListResults = () => {
                       Avatar
                     </TableCell>
                     <TableCell align="left">
-                      Full name
-                    </TableCell>
-                    <TableCell align="left">
-                      User name
-                    </TableCell>
-                    <TableCell align="left">
                       Email
+                    </TableCell>
+                    <TableCell align="left">
+                      Full name
                     </TableCell>
                     <TableCell align="left">
                       Phone
@@ -154,13 +151,13 @@ const UserListResults = () => {
             {users.map((user) => (
               <TableRow
                 hover
-                key={user.id}
-                selected={selectedUserIds.indexOf(user.id) !== -1}
+                key={user._id}
+                selected={selectedUserIds.indexOf(user._id) !== -1}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedUserIds.indexOf(user.id) !== -1}
-                    onChange={(event) => handleSelectOne(event, user.id)}
+                    checked={selectedUserIds.indexOf(user._id) !== -1}
+                    onChange={(event) => handleSelectOne(event, user._id)}
                     value="true"
                   />
                 </TableCell>
@@ -177,17 +174,6 @@ const UserListResults = () => {
                     />
                   </Box>
                 </TableCell>
-                <TableCell align="left">
-                  <Typography
-                    color="textPrimary"
-                    variant="body1"
-                  >
-                    {user.full_name}
-                  </Typography>
-                </TableCell>
-                <TableCell align="left">
-                  {user.username}
-                </TableCell>
                 <TableCell
                   align="left"
                   style={{
@@ -198,16 +184,24 @@ const UserListResults = () => {
                   {user.email}
                 </TableCell>
                 <TableCell align="left">
-                  {user.phone_number}
+                  <Typography
+                    color="textPrimary"
+                    variant="body1"
+                  >
+                    {user.fullName}
+                  </Typography>
                 </TableCell>
                 <TableCell align="left">
-                  <StatusLabel status={user.enable ? 'ENABLED' : 'DISABLED'} size="small" />
+                  {user.phoneNumber}
+                </TableCell>
+                <TableCell align="left">
+                  <StatusLabel status={user.isEnabled ? 'ENABLED' : 'DISABLED'} size="small" />
                 </TableCell>
                 <TableCell align="left">
                   {moment(user.createdAt).format('YYYY-MM-DD')}
                 </TableCell>
                 <TableCell align="right">
-                  <UserActions userId={user.id} userEnable={user.enable} />
+                  <UserActions userId={user._id} userEnable={user.isEnabled} />
                 </TableCell>
               </TableRow>
             ))}
