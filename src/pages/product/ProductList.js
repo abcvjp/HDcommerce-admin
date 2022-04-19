@@ -15,9 +15,9 @@ const initialState = {
   searchValue: '',
   triggerFetch: Date.now(),
   filters: {
-    enable: undefined,
+    isEnabled: undefined,
     inStock: undefined,
-    published: undefined,
+    isPublic: undefined,
     categoryId: undefined
   },
   sort: '',
@@ -58,7 +58,7 @@ function productListReducer(state, action) {
         ...state,
         filters: {
           ...state.filters,
-          enable: action.enable,
+          isEnabled: action.isEnabled,
         },
         currentPage: 0
       };
@@ -76,7 +76,7 @@ function productListReducer(state, action) {
         ...state,
         filters: {
           ...state.filters,
-          published: action.published
+          isPublic: action.isPublic
         },
         currentPage: 0
       };
@@ -128,18 +128,19 @@ const ProductList = () => {
     dispatch({ type: 'SET_LOADING' });
     try {
       const response = await productApi.getAll({
-        current_page: state.currentPage + 1,
-        page_size: state.pageSize,
-        category_id: state.filters.categoryId,
-        enable: state.filters.enable,
-        in_stock: state.filters.inStock,
-        published: state.filters.published,
+        skip: state.currentPage * state.pageSize,
+        limit: state.pageSize,
+        categoryId: state.filters.categoryId,
+        includeCategory: true,
+        isEnabled: state.filters.isEnabled,
+        inStock: state.filters.inStock,
+        isPublic: state.filters.isPublic,
         sort: state.sort
       });
       dispatch({
         type: 'SET_PRODUCTS',
-        products: response.data.data,
-        count: response.data.pagination.count
+        products: response.data.data.records,
+        count: response.data.data.count
       });
     } catch (err) {
       if (err.response && err.response.status === 404) {

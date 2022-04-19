@@ -102,7 +102,7 @@ const ProductListToolbar = () => {
   const handleEnableChange = (event) => {
     dispatch({
       type: 'CHANGE_ENABLE',
-      enable: event.target.value
+      isEnabled: event.target.value
     });
   };
 
@@ -116,7 +116,7 @@ const ProductListToolbar = () => {
   const handlePublishedChange = (event) => {
     dispatch({
       type: 'CHANGE_PUBLISHED',
-      published: event.target.value
+      isPublic: event.target.value
     });
   };
 
@@ -232,10 +232,10 @@ const ProductListToolbar = () => {
                 </Select>
               </Grid>
               <Grid item key="enable">
-                <InputLabel>Enable</InputLabel>
+                <InputLabel>Enabled</InputLabel>
                 <Select
                   native
-                  value={state.filters.enable}
+                  value={state.filters.isEnabled}
                   onChange={handleEnableChange}
                 >
                   {enableOptions.map((element) => <option key={element.name} value={element.value}>{element.name}</option>)}
@@ -255,7 +255,7 @@ const ProductListToolbar = () => {
                 <InputLabel>Published</InputLabel>
                 <Select
                   native
-                  value={state.filters.published}
+                  value={state.filters.isPublic}
                   onChange={handlePublishedChange}
                 >
                   {publishedOptions.map((element) => <option key={element.name} value={element.value}>{element.name}</option>)}

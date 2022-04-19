@@ -47,7 +47,7 @@ const ProductListResults = () => {
     let newSelectedProductIds;
 
     if (event.target.checked) {
-      newSelectedProductIds = products.map((product) => product.id);
+      newSelectedProductIds = products.map((product) => product._id);
     } else {
       newSelectedProductIds = [];
     }
@@ -94,11 +94,11 @@ const ProductListResults = () => {
       onConfirm: async () => {
         const productsToDisable = selectedProductIds.map((id) => ({
           id,
-          enable: false
+          isEnabled: false
         }));
         await productApi.updateProducts(productsToDisable);
         selectedProductIds.forEach((id) => {
-          products[products.findIndex((item) => item.id === id)].enable = false; //eslint-disable-line
+          products[products.findIndex((item) => item._id === id)].isEnabled = false; //eslint-disable-line
         });
         setSelectedProductIds([]);
       }
@@ -111,11 +111,11 @@ const ProductListResults = () => {
       onConfirm: async () => {
         const productsToEnable = selectedProductIds.map((id) => ({
           id,
-          enable: true
+          isEnabled: true
         }));
         await productApi.updateProducts(productsToEnable);
         selectedProductIds.forEach((id) => {
-          products[products.findIndex((item) => item.id === id)].enable = true; //eslint-disable-line
+          products[products.findIndex((item) => item._id === id)].isEnabled = true; //eslint-disable-line
         });
         setSelectedProductIds([]);
       }
@@ -150,7 +150,7 @@ const ProductListResults = () => {
                       Category
                     </TableCell>
                     <TableCell>
-                      Enable
+                      Enabled
                     </TableCell>
                     <TableCell>
                       Published
@@ -208,13 +208,13 @@ const ProductListResults = () => {
             {products.map((product) => (
               <TableRow
                 hover
-                key={product.id}
-                selected={selectedProductIds.indexOf(product.id) !== -1}
+                key={product._id}
+                selected={selectedProductIds.indexOf(product._id) !== -1}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedProductIds.indexOf(product.id) !== -1}
-                    onChange={(event) => handleSelectOne(event, product.id)}
+                    checked={selectedProductIds.indexOf(product._id) !== -1}
+                    onChange={(event) => handleSelectOne(event, product._id)}
                     value="true"
                   />
                 </TableCell>
@@ -226,7 +226,7 @@ const ProductListResults = () => {
                     }}
                   >
                     <Avatar
-                      src={product.images ? product.images[0].url : null}
+                      src={product.thumbnail ? product.thumbnail : null}
                       sx={{ mr: 2 }}
                       variant="rounded"
                     />
@@ -244,17 +244,17 @@ const ProductListResults = () => {
                   </Box>
                 </TableCell>
                 <TableCell>
-                  <Link component={RouterLink} to={`/management/category/${product.category.id}/edit`}>
+                  <Link component={RouterLink} to={`/management/category/${product.category._id}/edit`}>
                     {product.category.name}
                   </Link>
                 </TableCell>
                 <TableCell>
-                  {product.enable
+                  {product.isEnabled
                     ? <StatusLabel status="ENABLED" />
                     : <StatusLabel status="DISABLED" />}
                 </TableCell>
                 <TableCell>
-                  {product.published
+                  {product.isPublic
                     ? <StatusLabel status="Published" />
                     : <StatusLabel status="Unpublished" />}
                 </TableCell>
@@ -262,10 +262,10 @@ const ProductListResults = () => {
                   {product.price}
                 </TableCell>
                 <TableCell>
-                  {product.quantity}
+                  {product.stockQuantity}
                 </TableCell>
                 <TableCell>
-                  {product.sold}
+                  {product.soldQuantity}
                 </TableCell>
                 <TableCell align="right">
                   <Box m={0.5} display="inline-block">
@@ -273,7 +273,7 @@ const ProductListResults = () => {
                       color="primary"
                       component={RouterLink}
                       size="small"
-                      to={`${product.id}/edit`}
+                      to={`${product._id}/edit`}
                       variant="outlined"
                     >
                       Edit
