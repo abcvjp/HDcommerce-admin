@@ -3,7 +3,7 @@ import { cleanObj, convertObjToQuery, convertEmptyToNull } from '../functions';
 
 const categoryApi = {
   getAll: (query) => {
-    const url = '/category/all';
+    const url = '/category';
     return API.get(url + convertObjToQuery(cleanObj(query)));
   },
   deleteCategory: (id) => API.delete(`/category/${id}`),

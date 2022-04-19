@@ -62,7 +62,7 @@ const CategoryListToolbar = (props) => {
   const handlePublishedChange = (event) => {
     dispatch({
       type: 'CHANGE_PUBLISHED',
-      published: event.target.value
+      isPublic: event.target.value
     });
   };
 
@@ -146,11 +146,11 @@ const CategoryListToolbar = (props) => {
                 </Box>
               </Grid>
 
-              <Grid item key="published">
+              <Grid item key="isPublic">
                 <InputLabel>Published</InputLabel>
                 <Select
                   native
-                  value={state.filters.published}
+                  value={state.filters.isPublic}
                   onChange={handlePublishedChange}
                 >
                   {publishedOptions.map((element) => <option key={element.name} value={element.value}>{element.name}</option>)}

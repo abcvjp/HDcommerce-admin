@@ -15,7 +15,7 @@ const initialState = {
   searchValue: '',
   triggerFetch: Date.now(),
   filters: {
-    published: '',
+    isPublic: '',
   },
   sort: '',
   isLoading: false
@@ -62,7 +62,7 @@ function categoryListReducer(state, action) {
         ...state,
         filters: {
           ...state.filters,
-          published: action.published
+          isPublic: action.isPublic
         },
         currentPage: 0
       };
@@ -97,7 +97,7 @@ function categoryListReducer(state, action) {
       return {
         ...state,
         categories: state.categories.map((i) => {
-          if (i.id === action.category.id) {
+          if (i.id === action.category._id) {
             return { ...i, ...action.category };
           } return i;
         })
@@ -105,7 +105,7 @@ function categoryListReducer(state, action) {
     case 'UPDATE_CATEGORIES': {
       const newCategories = state.categories.slice();
       action.categories.forEach((category) => {
-        const index = newCategories.findIndex((curCategory) => curCategory.id === category.id);
+        const index = newCategories.findIndex((curCategory) => curCategory._id === category._id);
         if (index !== -1) {
           newCategories[index] = { ...newCategories[index], ...category };
         }
@@ -127,15 +127,15 @@ const CategoryList = () => {
     dispatch({ type: 'SET_LOADING' });
     try {
       const response = await categoryApi.getAll({
-        current_page: state.currentPage + 1,
-        page_size: state.pageSize,
+        skip: state.currentPage * state.pageSize,
+        limit: state.pageSize,
         ...state.filters,
         sort: state.sort
       });
       dispatch({
         type: 'SET_CATEGORIES',
-        categories: response.data.data,
-        count: response.data.pagination.count
+        categories: response.data.data.records,
+        count: response.data.data.count
       });
     } catch (err) {
       if (err.response && err.response.status === 404) {

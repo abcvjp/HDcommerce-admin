@@ -47,7 +47,7 @@ const CategoryListResults = () => {
     let newSelectedCategoryIds;
 
     if (event.target.checked) {
-      newSelectedCategoryIds = categories.map((category) => category.id);
+      newSelectedCategoryIds = categories.map((category) => category._id);
     } else {
       newSelectedCategoryIds = [];
     }
@@ -181,13 +181,13 @@ const CategoryListResults = () => {
             {categories.map((category) => (
               <TableRow
                 hover
-                key={category.id}
-                selected={selectedCategoryIds.indexOf(category.id) !== -1}
+                key={category._id}
+                selected={selectedCategoryIds.indexOf(category._id) !== -1}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedCategoryIds.indexOf(category.id) !== -1}
-                    onChange={(event) => handleSelectOne(event, category.id)}
+                    checked={selectedCategoryIds.indexOf(category._id) !== -1}
+                    onChange={(event) => handleSelectOne(event, category._id)}
                     value="true"
                   />
                 </TableCell>
@@ -205,10 +205,10 @@ const CategoryListResults = () => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  {category.path}
+                  {category.path.join(' - ')}
                 </TableCell>
                 <TableCell>
-                  {category.published ? <StatusLabel status="PUBLISHED" /> : <StatusLabel status="UNPUBLISHED" />}
+                  {category.isPublic ? <StatusLabel status="PUBLISHED" /> : <StatusLabel status="UNPUBLISHED" />}
                 </TableCell>
                 <TableCell>
                   {new Date(category.createdAt).toLocaleString('en-us')}
@@ -219,7 +219,7 @@ const CategoryListResults = () => {
                       color="primary"
                       component={RouterLink}
                       size="small"
-                      to={`${category.id}/edit`}
+                      to={`${category._id}/edit`}
                       variant="outlined"
                     >
                       Edit
