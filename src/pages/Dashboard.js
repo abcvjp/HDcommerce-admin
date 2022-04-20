@@ -88,7 +88,7 @@ const Dashboard = () => (
             item
             lg={4}
             md={6}
-            xl={3}
+            xl={4}
             xs={12}
           >
             <LatestProducts sx={{ height: '100%' }} />
@@ -97,7 +97,7 @@ const Dashboard = () => (
             item
             lg={8}
             md={12}
-            xl={9}
+            xl={8}
             xs={12}
           >
             <LatestOrders />

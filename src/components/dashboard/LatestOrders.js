@@ -21,8 +21,8 @@ const LatestOrders = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     const fetchOrders = async () => {
-      const response = await orderApi.getOrders({ sort: 'createdAt.desc', page_size: 7 });
-      setOrders(response.data.data);
+      const response = await orderApi.getOrders({ limit: 7 });
+      setOrders(response.data.data.records);
     };
     fetchOrders();
   }, []);
@@ -30,18 +30,21 @@ const LatestOrders = () => {
     <Card>
       <CardHeader title="Latest Orders" />
       <Divider />
-      <Box sx={{ minWidth: 800 }}>
+      <Box sx={{ minWidth: 600 }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell size="small">
-                Order ID
+              <TableCell>
+                Code
               </TableCell>
               <TableCell>
                 Customer
               </TableCell>
               <TableCell sortDirection="desc">
                 Date
+              </TableCell>
+              <TableCell>
+                Total
               </TableCell>
               <TableCell>
                 Status
@@ -52,16 +55,19 @@ const LatestOrders = () => {
             {orders.map((order) => (
               <TableRow
                 hover
-                key={order.id}
+                key={order._id}
               >
-                <TableCell size="small">
-                  {order.id}
+                <TableCell>
+                  {order.code}
                 </TableCell>
                 <TableCell>
-                  {order.customer_name}
+                  {order.customerInfo.name}
                 </TableCell>
                 <TableCell>
-                  {moment(order.createdAt).format('DD/MM/YYYY')}
+                  {moment(order.createdAt).format('DD-MM-YYYY HH:mm')}
+                </TableCell>
+                <TableCell>
+                  {order.orderTotal}
                 </TableCell>
                 <TableCell>
                   <StatusLabel status={order.status} />
