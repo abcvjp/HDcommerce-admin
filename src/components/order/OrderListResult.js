@@ -48,7 +48,7 @@ const OrderListResults = () => {
     let newSelectedOrderIds;
 
     if (event.target.checked) {
-      newSelectedOrderIds = orders.map((order) => order.id);
+      newSelectedOrderIds = orders.map((order) => order._id);
     } else {
       newSelectedOrderIds = [];
     }
@@ -135,8 +135,8 @@ const OrderListResults = () => {
         const ordersTemp = selectedOrderIds.map((id) => ({
           id,
           status: 'Completed',
-          payment_status: 'Paid',
-          shipping_status: 'Successfully delivered'
+          paymentStatus: 'Paid',
+          deliveryStatus: 'Successfully delivered'
         }));
         await orderApi.updateOrdersStatus(ordersTemp);
         dispatch({
@@ -250,13 +250,13 @@ const OrderListResults = () => {
             {orders.map((order) => (
               <TableRow
                 hover
-                key={order.id}
-                selected={selectedOrderIds.indexOf(order.id) !== -1}
+                key={order._id}
+                selected={selectedOrderIds.indexOf(order._id) !== -1}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedOrderIds.indexOf(order.id) !== -1}
-                    onChange={(event) => handleSelectOne(event, order.id)}
+                    checked={selectedOrderIds.indexOf(order._id) !== -1}
+                    onChange={(event) => handleSelectOne(event, order._id)}
                     value="true"
                   />
                 </TableCell>
@@ -269,13 +269,13 @@ const OrderListResults = () => {
                   >
                     <Link
                       component={RouterLink}
-                      to={order.id}
+                      to={order._id}
                     >
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {order.id}
+                        {order._id}
                       </Typography>
                     </Link>
                   </Box>
@@ -290,22 +290,22 @@ const OrderListResults = () => {
                     wordWrap: 'break-word'
                   }}
                 >
-                  {`${order.customer_name} - ${order.email} - ${order.phone_number}`}
+                  {`${order.customerInfo.name} - ${order.customerInfo.email} - ${order.customerInfo.phoneNumber}`}
                 </TableCell>
                 <TableCell align="left">
-                  {order.order_total}
+                  {order.orderTotal}
                 </TableCell>
                 <TableCell align="left">
                   <StatusLabel status={order.status} size="small" />
                 </TableCell>
                 <TableCell align="left">
-                  <StatusLabel status={order.payment_status} size="small" />
+                  <StatusLabel status={order.paymentStatus} size="small" />
                 </TableCell>
                 <TableCell align="left">
-                  <StatusLabel status={order.shipping_status} size="small" />
+                  <StatusLabel status={order.deliveryStatus} size="small" />
                 </TableCell>
                 <TableCell align="right">
-                  <OrderActions orderId={order.id} status={order.status} />
+                  <OrderActions orderId={order._id} status={order.status} />
                 </TableCell>
               </TableRow>
             ))}

@@ -25,7 +25,7 @@ const OrderItemList = ({ items }) => (
       </TableHead>
       <TableBody>
         {items.map((item) => (
-          <TableRow key={item.product_id} hover>
+          <TableRow key={item.productId} hover>
             <TableCell>
               <Box
                 sx={{
@@ -35,7 +35,7 @@ const OrderItemList = ({ items }) => (
                 }}
               >
                 <Avatar
-                  src={item.product_thumbnail}
+                  src={item.productThumbnail}
                   sx={{ mr: 2 }}
                   variant="rounded"
                 />
@@ -43,9 +43,9 @@ const OrderItemList = ({ items }) => (
                   color="textPrimary"
                   variant="body1"
                   component={Link}
-                  to={`/management/product/${item.product_id}/edit`}
+                  to={`/management/product/${item.productId}/edit`}
                 >
-                  {item.product_name}
+                  {item.productName}
                 </Typography>
               </Box>
             </TableCell>

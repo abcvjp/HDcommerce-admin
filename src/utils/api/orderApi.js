@@ -3,7 +3,7 @@ import API from './apiClient';
 
 const orderApi = {
   getOrders: (query) => {
-    const url = '/order/all';
+    const url = '/order';
     return API.get(url + convertObjToQuery(cleanObj(query)));
   },
   getOrder: (id) => API.get(`/order/${id}`),

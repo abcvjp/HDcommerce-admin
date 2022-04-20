@@ -250,8 +250,8 @@ const ProductListResults = () => {
                 </TableCell>
                 <TableCell>
                   {product.isEnabled
-                    ? <StatusLabel status="ENABLED" />
-                    : <StatusLabel status="DISABLED" />}
+                    ? <StatusLabel status="Enabled" />
+                    : <StatusLabel status="Disabled" />}
                 </TableCell>
                 <TableCell>
                   {product.isPublic

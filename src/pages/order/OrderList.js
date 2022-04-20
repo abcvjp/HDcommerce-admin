@@ -16,13 +16,13 @@ const initialState = {
   filters: {
     id: '',
     status: '',
-    payment_status: '',
-    shipping_status: '',
-    customer_name: '',
+    paymentStatus: '',
+    deliveryStatus: '',
+    fullName: '',
     email: '',
-    phone_number: '',
-    start_date: '',
-    end_date: ''
+    phoneNumber: '',
+    startDate: '',
+    endDate: ''
   },
   sort: '',
   isLoading: false
@@ -116,15 +116,15 @@ const OrderList = () => {
       const { filters } = state;
       try {
         const response = await orderApi.getOrders({
-          current_page: state.currentPage + 1,
-          page_size: state.pageSize,
+          skip: state.currentPage * state.pageSize,
+          limit: state.pageSize,
           ...filters,
           sort: state.sort
         });
         dispatch({
           type: 'SET_ORDERS',
-          orders: response.data.data,
-          count: response.data.pagination.count
+          orders: response.data.data.records,
+          count: response.data.data.count
         });
       } catch (err) {
         if (err.response && err.response.status === 404) {

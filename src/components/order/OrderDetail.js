@@ -22,24 +22,24 @@ const OrderDetail = ({ order }) => {
 
   const orderStatus = [
     createInfoField('Status', order.status),
-    createInfoField('Payment Status', order.payment_status),
-    createInfoField('Shipping Status', order.shipping_status)
+    createInfoField('Payment Status', order.paymentStatus),
+    createInfoField('Shipping Status', order.deliveryStatus)
   ];
   const orderInfo = [
-    createInfoField('Order ID', order.id),
-    createInfoField('User ID', order.user_id),
+    createInfoField('Order ID', order._id),
+    createInfoField('User ID', order.userId),
     createInfoField('Created at', (new Date(order.createdAt)).toLocaleString('en-us')),
     createInfoField('Last update', (new Date(order.updatedAt)).toLocaleString('en-us')),
-    createInfoField('Order total', `$${order.order_total}`),
-    createInfoField('Item total', `$${order.item_total}`),
-    createInfoField('Shipping fee', `$${order.shipping_fee}`),
-    createInfoField('Customer name', order.customer_name),
-    createInfoField('Email', order.email),
-    createInfoField('Phone number', order.phone_number),
-    createInfoField('Payment method', order.payment_method.name),
-    createInfoField('Shipping method', order.shipping_method.name),
+    createInfoField('Order total', `$${order.orderTotal}`),
+    createInfoField('Item total', `$${order.itemTotal}`),
+    createInfoField('Shipping fee', `$${order.deliveryFee}`),
+    createInfoField('Customer name', order.customerInfo.name),
+    createInfoField('Email', order.customerInfo.email),
+    createInfoField('Phone number', order.phoneNumber),
+    createInfoField('Payment method', order.paymentMethod.name),
+    createInfoField('Shipping method', order.shippingMethod.name),
     createInfoField('Shipping dddress', order.address),
-    createInfoField('Shipping note', order.shipping_note)
+    // createInfoField('Shipping note', order.shippingNote)
   ];
 
   return (
@@ -88,7 +88,7 @@ const OrderDetail = ({ order }) => {
         <Paper>
           <Typography className={classes.title} variant="h3">Order Items</Typography>
           <Divider />
-          <OrderItemList items={order.order_items} />
+          <OrderItemList items={order.items} />
         </Paper>
       </Grid>
     </Grid>

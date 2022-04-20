@@ -208,7 +208,7 @@ const CategoryListResults = () => {
                   {category.path.join(' - ')}
                 </TableCell>
                 <TableCell>
-                  {category.isPublic ? <StatusLabel status="PUBLISHED" /> : <StatusLabel status="UNPUBLISHED" />}
+                  {category.isPublic ? <StatusLabel status="Published" /> : <StatusLabel status="Unpublished" />}
                 </TableCell>
                 <TableCell>
                   {new Date(category.createdAt).toLocaleString('en-us')}

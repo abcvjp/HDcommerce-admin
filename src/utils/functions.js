@@ -88,15 +88,17 @@ export const moveInArray = (arr, from, to) => {
 };
 
 export const statusColors = {
+  Failed: 'red',
+  Creating: 'brown',
   Completed: 'green',
   Canceled: 'red',
   Handling: 'DodgerBlue',
   Pending: 'orange',
   Paid: 'green',
-  Unpaid: 'orange',
+  Unpaid: 'brown',
   'Successfully delivered': 'green',
   'Delivery failed': 'red',
-  Undelivered: 'orange',
+  Undelivered: 'brown',
   Delivering: 'DodgerBlue',
   Disabled: 'red',
   Enabled: 'green',
