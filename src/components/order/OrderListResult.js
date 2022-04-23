@@ -188,7 +188,7 @@ const OrderListResults = () => {
                       Payment status
                     </TableCell>
                     <TableCell align="left">
-                      Shipping status
+                      Delivery status
                     </TableCell>
                     <TableCell align="right">
                       Actions

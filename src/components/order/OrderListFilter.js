@@ -28,15 +28,15 @@ const OrderListFilter = () => {
     <Formik
       initialValues={{ ...state.filters }}
       validationSchema={Yup.object().shape({
-        id: Yup.string().uuid(),
-        customer_name: Yup.string().trim().min(1).max(100),
+        _id: Yup.string(),
+        fullName: Yup.string().trim().min(1).max(100),
         email: Yup.string().trim().email(),
-        phone_number: Yup.string().length(10).matches(/^[0-9]+$/),
+        phoneNumber: Yup.string().length(10).matches(/^[0-9]+$/),
         status: Yup.mixed().oneOf(['Pending', 'Handling', 'Completed', 'Canceled']),
-        payment_status: Yup.mixed().oneOf(['Unpaid', 'Paid']),
-        shipping_status: Yup.mixed().oneOf(['Undelivered', 'Delivering', 'Successfully delivered', 'Delivery failed']),
-        start_date: Yup.date(),
-        end_date: Yup.date()
+        paymentStatus: Yup.mixed().oneOf(['Unpaid', 'Paid']),
+        shippingStatus: Yup.mixed().oneOf(['Undelivered', 'Delivering', 'Successfully delivered', 'Delivery failed']),
+        startDate: Yup.date(),
+        endDate: Yup.date()
       })}
       onSubmit={(values) => dispatch({ type: 'SET_FILTERS', filters: values })}
     >
@@ -62,23 +62,23 @@ const OrderListFilter = () => {
                 id="id"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.id}
+                value={values._id}
                 variant="outlined"
               />
             </Grid>
             <Grid item key="name" className={classes.field}>
               <TextField
-                error={Boolean(touched.customer_name && errors.customer_name)}
+                error={Boolean(touched.fullName && errors.fullName)}
                 fullWidth
-                helperText={touched.customer_name && errors.customer_name}
+                helperText={touched.fullName && errors.fullName}
                 label="Customer name"
-                name="customer_name"
+                name="fullName"
                 margin="dense"
                 size="small"
-                customer_name="customer_name"
+                fullName="fullName"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.customer_name}
+                value={values.fullName}
                 variant="outlined"
               />
             </Grid>
@@ -98,19 +98,19 @@ const OrderListFilter = () => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item key="phone_number" className={classes.field}>
+            <Grid item key="phoneNumber" className={classes.field}>
               <TextField
-                error={Boolean(touched.phone_number && errors.phone_number)}
+                error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                 fullWidth
-                helperText={touched.phone_number && errors.phone_number}
+                helperText={touched.phoneNumber && errors.phoneNumber}
                 label="Phone number"
-                name="phone_number"
+                name="phoneNumber"
                 margin="dense"
                 size="small"
-                phone_number="phone_number"
+                phoneNumber="phoneNumber"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.phone_number}
+                value={values.phoneNumber}
                 variant="outlined"
               />
             </Grid>
@@ -137,19 +137,19 @@ const OrderListFilter = () => {
                 ))}
               </TextField>
             </Grid>
-            <Grid item key="payment_status" className={classes.field}>
+            <Grid item key="paymentStatus" className={classes.field}>
               <TextField
-                error={Boolean(touched.payment_status && errors.payment_status)}
-                helperText={touched.payment_status && errors.payment_status}
+                error={Boolean(touched.paymentStatus && errors.paymentStatus)}
+                helperText={touched.paymentStatus && errors.paymentStatus}
                 label="Payment Status"
-                name="payment_status"
+                name="paymentStatus"
                 margin="dense"
                 size="small"
                 fullWidth
                 select
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.payment_status}
+                value={values.paymentStatus}
                 variant="outlined"
                 className={classes.field}
               >
@@ -161,19 +161,19 @@ const OrderListFilter = () => {
                 ))}
               </TextField>
             </Grid>
-            <Grid item key="shipping_status" className={classes.field}>
+            <Grid item key="deliveryStatus" className={classes.field}>
               <TextField
-                error={Boolean(touched.shipping_status && errors.shipping_status)}
-                helperText={touched.shipping_status && errors.shipping_status}
+                error={Boolean(touched.deliveryStatus && errors.deliveryStatus)}
+                helperText={touched.deliveryStatus && errors.deliveryStatus}
                 label="Shipping Status"
-                name="shipping_status"
+                name="deliveryStatus"
                 margin="dense"
                 size="small"
                 fullWidth
                 select
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.shipping_status}
+                value={values.deliveryStatus}
                 variant="outlined"
                 className={classes.field}
               >
@@ -185,19 +185,19 @@ const OrderListFilter = () => {
                 ))}
               </TextField>
             </Grid>
-            <Grid item key="start_date" className={classes.field}>
+            <Grid item key="startDate" className={classes.field}>
               <TextField
-                error={Boolean(touched.start_date && errors.start_date)}
-                helperText={touched.start_date && errors.start_date}
+                error={Boolean(touched.startDate && errors.startDate)}
+                helperText={touched.startDate && errors.startDate}
                 label="Start Date"
-                name="start_date"
+                name="startDate"
                 type="date"
                 margin="dense"
                 size="small"
                 fullWidth
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.start_date}
+                value={values.startDate}
                 variant="outlined"
                 className={classes.field}
                 InputLabelProps={{
@@ -205,19 +205,19 @@ const OrderListFilter = () => {
                 }}
               />
             </Grid>
-            <Grid item key="end_date" className={classes.field}>
+            <Grid item key="endDate" className={classes.field}>
               <TextField
-                error={Boolean(touched.end_date && errors.end_date)}
-                helperText={touched.end_date && errors.end_date}
+                error={Boolean(touched.endDate && errors.endDate)}
+                helperText={touched.endDate && errors.endDate}
                 label="End Date"
-                name="end_date"
+                name="endDate"
                 type="date"
                 margin="dense"
                 size="small"
                 fullWidth
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.end_date}
+                value={values.endDate}
                 variant="outlined"
                 className={classes.field}
                 InputLabelProps={{

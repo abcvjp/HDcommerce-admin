@@ -20,11 +20,11 @@ import { CSVLink } from 'react-csv';
 import OrderListFilter from './OrderListFilter';
 
 const sortOptions = [
-  { name: 'Newest', value: 'createdAt.desc' },
-  { name: 'Oldest', value: 'createdAt.asc' },
-  { name: 'Updated recenly', value: 'updatedAt.desc' },
-  { name: 'Total (Low to High)', value: 'order_total.asc' },
-  { name: 'Total (High to Low)', value: 'order_total.desc' },
+  { name: 'Newest', value: '-createdAt' },
+  { name: 'Oldest', value: '+createdAt' },
+  { name: 'Updated recenly', value: '-updatedAt' },
+  { name: 'Total (Low to High)', value: '+orderTotal' },
+  { name: 'Total (High to Low)', value: '-orderTotal' },
 ];
 
 const createHeader = (label, key) => ({ label, key });

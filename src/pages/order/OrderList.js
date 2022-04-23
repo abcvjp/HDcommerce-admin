@@ -14,7 +14,7 @@ const initialState = {
   count: 10,
   triggerFetch: Date.now(),
   filters: {
-    id: '',
+    _id: '',
     status: '',
     paymentStatus: '',
     deliveryStatus: '',
@@ -113,12 +113,22 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       dispatch({ type: 'SET_LOADING' });
-      const { filters } = state;
+      const {
+        _id, status, paymentStatus, deliveryStatus, startDate, endDate, fullName, email, phoneNumber
+      } = state.filters;
       try {
         const response = await orderApi.getOrders({
           skip: state.currentPage * state.pageSize,
           limit: state.pageSize,
-          ...filters,
+          _id,
+          status,
+          paymentStatus,
+          deliveryStatus,
+          startDate,
+          endDate,
+          'customerInfo[name]': fullName,
+          'customerInfo[email]': email,
+          'customerInfo[phoneNumber]': phoneNumber,
           sort: state.sort
         });
         dispatch({
