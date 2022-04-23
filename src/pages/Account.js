@@ -10,7 +10,11 @@ import AccountProfileDetails from 'src/components/account/AccountProfileDetails'
 const Account = () => (
   <>
     <Helmet>
-      <title>Account</title>
+      <title>
+        Account |
+        {' '}
+        {process.env.REACT_APP_APP_NAME}
+      </title>
     </Helmet>
     <Box
       sx={{

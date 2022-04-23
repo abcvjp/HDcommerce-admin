@@ -101,7 +101,11 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Login | AppShop</title>
+        <title>
+          Login |
+          {' '}
+          {process.env.REACT_APP_APP_NAME}
+        </title>
       </Helmet>
       <Box
         sx={{

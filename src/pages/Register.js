@@ -19,7 +19,11 @@ const Register = () => {
   return (
     <>
       <Helmet>
-        <title>Register | Material Kit</title>
+        <title>
+          Register |
+          {' '}
+          {process.env.REACT_APP_APP_NAME}
+        </title>
       </Helmet>
       <Box
         sx={{

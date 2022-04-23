@@ -7,7 +7,11 @@ import customers from '../__mocks__/customers';
 const CustomerList = () => (
   <>
     <Helmet>
-      <title>Customers | Material Kit</title>
+      <title>
+        Customers |
+        {' '}
+        {process.env.REACT_APP_APP_NAME}
+      </title>
     </Helmet>
     <Box
       sx={{

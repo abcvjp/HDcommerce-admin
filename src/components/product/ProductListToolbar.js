@@ -20,14 +20,14 @@ import {
 import { Search as SearchIcon, RefreshCcw as RefreshIcon, X } from 'react-feather';
 
 const sortOptions = [
-  { name: 'Newest', value: 'createdAt.desc' },
-  { name: 'Oldest', value: 'createdAt.asc' },
-  { name: 'Price (Low to High)', value: 'price.asc' },
-  { name: 'Price (High to Low)', value: 'price.desc' },
-  { name: 'Discount', value: 'discount.desc' },
-  { name: 'Best Selling', value: 'sold.desc' },
-  { name: 'Quantity (Low to High)', value: 'quantity.asc' },
-  { name: 'Quantity (High to Low)', value: 'quantity.desc' }
+  { name: 'Newest', value: '-createdAt' },
+  { name: 'Oldest', value: '+createdAt' },
+  { name: 'Price (Low to High)', value: '+price' },
+  { name: 'Price (High to Low)', value: '-price' },
+  { name: 'Discount', value: '-discount' },
+  { name: 'Best Selling', value: '-sold' },
+  { name: 'Quantity (Low to High)', value: '+stockQuantity' },
+  { name: 'Quantity (High to Low)', value: '-stockQuantity' }
 ];
 
 const enableOptions = [
@@ -123,7 +123,7 @@ const ProductListToolbar = () => {
   const handleCategoryChange = (event) => {
     dispatch({
       type: 'CHANGE_CATEGORY',
-      categoryId: event.target.value
+      categoryId: event.target.value === 'All' ? undefined : event.target.value
     });
   };
 
@@ -227,8 +227,8 @@ const ProductListToolbar = () => {
                   value={state.filters.categoryId}
                   onChange={handleCategoryChange}
                 >
-                  <option key="All" value={undefined}>All</option>
-                  {categories.length > 0 && categories.map((category) => <option key={category.name} value={category.id}>{category.name}</option>)}
+                  <option key="All" value="All">All</option>
+                  {categories.length > 0 && categories.map((category) => <option key={category.name} value={category._id}>{category.name}</option>)}
                 </Select>
               </Grid>
               <Grid item key="enable">

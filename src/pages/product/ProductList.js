@@ -127,16 +127,33 @@ const ProductList = () => {
   const fetchProducts = async () => {
     dispatch({ type: 'SET_LOADING' });
     try {
-      const response = await productApi.getAll({
+      const queryParams = {
         skip: state.currentPage * state.pageSize,
         limit: state.pageSize,
-        categoryId: state.filters.categoryId,
+        // categoryId: state.filters.categoryId,
         includeCategory: true,
         isEnabled: state.filters.isEnabled,
-        inStock: state.filters.inStock,
+        // stockQuantity: state.filters.inStock,
         isPublic: state.filters.isPublic,
         sort: state.sort
-      });
+      };
+      if (state.searchValue && state.searchValue.length > 4) {
+        queryParams.keyword = state.searchValue;
+      }
+      if (state.filters.categoryId) {
+        queryParams.categoryId = state.filters.categoryId;
+      }
+      switch (state.filters.inStock) {
+        case 'true':
+          queryParams['stockQuantity[gt]'] = 0;
+          break;
+        case 'false':
+          queryParams['stockQuantity[eq]'] = 0;
+          break;
+        default:
+          break;
+      }
+      const response = await productApi.getAll(queryParams);
       dispatch({
         type: 'SET_PRODUCTS',
         products: response.data.data.records,
@@ -155,39 +172,40 @@ const ProductList = () => {
     dispatch({ type: 'SET_UNLOADING' });
   };
 
-  const searchProducts = async () => {
-    dispatch({ type: 'SET_LOADING' });
-    try {
-      const response = await productApi.searchProducts({
-        q: state.searchValue,
-        current_page: state.currentPage + 1,
-        page_size: state.pageSize,
-        category_id: state.filters.categoryId,
-        enable: state.filters.enable,
-        in_stock: state.filters.inStock,
-        published: state.filters.published,
-        sort: state.sort
-      });
-      dispatch({
-        type: 'SET_PRODUCTS',
-        products: response.data.data,
-        count: response.data.pagination.count
-      });
-    } catch (err) {
-      if (err.response && err.response.status === 404) {
-        dispatch({
-          type: 'SET_PRODUCTS',
-          products: [],
-          count: 0
-        });
-      }
-      console.log(err);
-    }
-    dispatch({ type: 'SET_UNLOADING' });
-  };
+  // const searchProducts = async () => {
+  // dispatch({ type: 'SET_LOADING' });
+  // try {
+  // const response = await productApi.searchProducts({
+  // q: state.searchValue,
+  // current_page: state.currentPage + 1,
+  // page_size: state.pageSize,
+  // category_id: state.filters.categoryId,
+  // enable: state.filters.enable,
+  // in_stock: state.filters.inStock,
+  // published: state.filters.published,
+  // sort: state.sort
+  // });
+  // dispatch({
+  // type: 'SET_PRODUCTS',
+  // products: response.data.data,
+  // count: response.data.pagination.count
+  // });
+  // } catch (err) {
+  // if (err.response && err.response.status === 404) {
+  // dispatch({
+  // type: 'SET_PRODUCTS',
+  // products: [],
+  // count: 0
+  // });
+  // }
+  // console.log(err);
+  // }
+  // dispatch({ type: 'SET_UNLOADING' });
+  // };
 
   useEffect(() => {
-    if (state.searchValue.length > 4) { searchProducts(); } else { fetchProducts(); }
+    // if (state.searchValue.length > 4) { searchProducts(); } else { fetchProducts(); }
+    fetchProducts();
   }, [state.pageSize, state.currentPage, state.filters, state.sort, state.triggerFetch]);
 
   return (

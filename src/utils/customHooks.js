@@ -5,8 +5,8 @@ const useCategories = () => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchCategory = async () => {
-      const response = await categoryApi.getAll();
-      setCategories(response.data.data);
+      const response = await categoryApi.getAll({ includeChildren: true });
+      setCategories(response.data.data.records);
     };
     fetchCategory();
   }, []);

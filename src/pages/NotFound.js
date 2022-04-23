@@ -8,7 +8,11 @@ import {
 const NotFound = () => (
   <>
     <Helmet>
-      <title>404 | Material Kit</title>
+      <title>
+        404 |
+        {' '}
+        {process.env.REACT_APP_APP_NAME}
+      </title>
     </Helmet>
     <Box
       sx={{

@@ -16,7 +16,11 @@ import TrafficByDevice from 'src/components/dashboard//TrafficByDevice';
 const Dashboard = () => (
   <>
     <Helmet>
-      <title>Dashboard | Material Kit</title>
+      <title>
+        Dashboard |
+        {' '}
+        {process.env.REACT_APP_APP_NAME}
+      </title>
     </Helmet>
     <Box
       sx={{
