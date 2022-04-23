@@ -126,12 +126,16 @@ const CategoryList = () => {
   const fetchCategories = async () => {
     dispatch({ type: 'SET_LOADING' });
     try {
-      const response = await categoryApi.getAll({
+      const queryParams = {
         skip: state.currentPage * state.pageSize,
         limit: state.pageSize,
         ...state.filters,
         sort: state.sort
-      });
+      };
+      if (state.searchValue && state.searchValue.length > 4) {
+        queryParams.keyword = state.searchValue;
+      }
+      const response = await categoryApi.getAll(queryParams);
       dispatch({
         type: 'SET_CATEGORIES',
         categories: response.data.data.records,
@@ -150,36 +154,36 @@ const CategoryList = () => {
     dispatch({ type: 'SET_UNLOADING' });
   };
 
-  const searchCategories = async () => {
-    dispatch({ type: 'SET_LOADING' });
-    try {
-      const response = await categoryApi.searchCategories({
-        q: state.searchValue,
-        current_page: state.currentPage + 1,
-        page_size: state.pageSize,
-        ...state.filters,
-        sort: state.sort
-      });
-      dispatch({
-        type: 'SET_CATEGORIES',
-        categories: response.data.data,
-        count: response.data.pagination.count
-      });
-    } catch (err) {
-      if (err.response && err.response.status === 404) {
-        dispatch({
-          type: 'SET_CATEGORIES',
-          categories: [],
-          count: 0
-        });
-      }
-      console.log(err);
-    }
-    dispatch({ type: 'SET_UNLOADING' });
-  };
+  // const searchCategories = async () => {
+  // dispatch({ type: 'SET_LOADING' });
+  // try {
+  // const response = await categoryApi.searchCategories({
+  // q: state.searchValue,
+  // current_page: state.currentPage + 1,
+  // page_size: state.pageSize,
+  // ...state.filters,
+  // sort: state.sort
+  // });
+  // dispatch({
+  // type: 'SET_CATEGORIES',
+  // categories: response.data.data,
+  // count: response.data.pagination.count
+  // });
+  // } catch (err) {
+  // if (err.response && err.response.status === 404) {
+  // dispatch({
+  // type: 'SET_CATEGORIES',
+  // categories: [],
+  // count: 0
+  // });
+  // }
+  // console.log(err);
+  // }
+  // dispatch({ type: 'SET_UNLOADING' });
+  // };
 
   useEffect(() => {
-    if (state.searchValue.length > 4) { searchCategories(); } else { fetchCategories(); }
+    fetchCategories();
   }, [state.pageSize, state.currentPage, state.filters, state.sort, state.triggerFetch]);
 
   return (
