@@ -5,6 +5,7 @@ import { userApi } from 'src/utils/api';
 import UserListToolbar from 'src/components/user/UserListToolbar';
 import UserListResults from 'src/components/user/UserListResult';
 import { UserListContext } from 'src/utils/contexts';
+// import { mapKeys } from 'lodash';
 import Page from '../../components/Page';
 
 const initialState = {
@@ -109,12 +110,18 @@ const UserList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       dispatch({ type: 'SET_LOADING' });
-      const { filters } = state;
+      // const {
+      // _id, email, fullName, phoneNumber
+      // } = state.filters;
       try {
         const response = await userApi.getUsers({
           skip: state.currentPage * state.pageSize,
           limit: state.pageSize,
-          ...filters,
+          // ...mapKeys({
+          // _id, email, fullName, phoneNumber
+          // }, (value, key) => `customerInfo[${key}]`),
+          // isEnabled: state.filters.isEnabled,
+          ...state.filters,
           sort: state.sort
         });
         dispatch({

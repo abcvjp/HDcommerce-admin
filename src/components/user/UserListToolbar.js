@@ -20,9 +20,9 @@ import { CSVLink } from 'react-csv';
 import UserListFilter from './UserListFilter';
 
 const sortOptions = [
-  { name: 'Newest', value: 'createdAt.desc' },
-  { name: 'Oldest', value: 'createdAt.asc' },
-  { name: 'Updated recenly', value: 'updatedAt.desc' },
+  { name: 'Newest', value: '-createdAt' },
+  { name: 'Oldest', value: '+createdAt' },
+  { name: 'Updated recently', value: '-updatedAt' },
 ];
 
 const createHeader = (label, key) => ({ label, key });

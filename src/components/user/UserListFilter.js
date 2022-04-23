@@ -69,7 +69,7 @@ const UserListFilter = () => {
                 error={Boolean(touched.fullName && errors.fullName)}
                 fullWidth
                 helperText={touched.fullName && errors.fullName}
-                label="Customer name"
+                label="Full name"
                 name="fullName"
                 margin="dense"
                 size="small"
