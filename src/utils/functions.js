@@ -100,6 +100,7 @@ export const statusColors = {
   'Delivery failed': 'red',
   Undelivered: 'brown',
   Delivering: 'DodgerBlue',
+  Success: 'green',
   Disabled: 'red',
   Enabled: 'green',
   DISABLED: 'red',

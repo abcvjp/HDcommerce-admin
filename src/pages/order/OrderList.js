@@ -84,7 +84,7 @@ function orderListReducer(state, action) {
       return {
         ...state,
         orders: state.orders.map((i) => {
-          if (i.id === action.order.id) {
+          if (i._id === action.order._id) {
             return { ...i, ...action.order };
           } return i;
         })
@@ -92,7 +92,7 @@ function orderListReducer(state, action) {
     case 'UPDATE_ORDERS': {
       const newOrders = state.orders.slice();
       action.orders.forEach((order) => {
-        const index = newOrders.findIndex((curOrder) => curOrder.id === order.id);
+        const index = newOrders.findIndex((curOrder) => curOrder._id === order._id);
         if (index !== -1) {
           newOrders[index] = { ...newOrders[index], ...order };
         }

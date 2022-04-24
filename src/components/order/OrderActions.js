@@ -23,7 +23,7 @@ const OrderActions = ({
         await orderApi.confirmOrder(orderId);
         dispatch({
           type: 'UPDATE_ORDER',
-          order: { id: orderId, status: 'Handling' }
+          order: { _id: orderId, status: 'Handling' }
         });
       }
     }));
@@ -36,10 +36,10 @@ const OrderActions = ({
         dispatch({
           type: 'UPDATE_ORDER',
           order: {
-            id: orderId,
+            _id: orderId,
             status: 'Completed',
-            payment_status: 'Paid',
-            shipping_status: 'Successfully delivered'
+            paymentStatus: 'Paid',
+            deliveryStatus: 'SUCCESS'
           }
         });
       }
@@ -52,7 +52,7 @@ const OrderActions = ({
         await orderApi.cancelOrder(orderId);
         dispatch({
           type: 'UPDATE_ORDER',
-          order: { id: orderId, status: 'Canceled' }
+          order: { _id: orderId, status: 'Canceled' }
         });
       }
     }));

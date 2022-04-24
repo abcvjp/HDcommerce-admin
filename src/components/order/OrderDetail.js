@@ -36,8 +36,8 @@ const OrderDetail = ({ order }) => {
     createInfoField('Customer name', order.customerInfo.name),
     createInfoField('Email', order.customerInfo.email),
     createInfoField('Phone number', order.phoneNumber),
-    createInfoField('Payment method', order.paymentMethod.name),
-    createInfoField('Shipping method', order.shippingMethod.name),
+    // createInfoField('Payment method', order.paymentMethod.name),
+    // createInfoField('Shipping method', order.shippingMethod.name),
     createInfoField('Shipping dddress', order.address),
     // createInfoField('Shipping note', order.shippingNote)
   ];

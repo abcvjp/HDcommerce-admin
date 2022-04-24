@@ -10,7 +10,9 @@ const Page = ({
       <title>
         {title}
         {' '}
-        | Webshop Admin
+        |
+        {' '}
+        {process.env.REACT_APP_APP_NAME}
       </title>
     </Helmet>
     <Box

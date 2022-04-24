@@ -170,7 +170,7 @@ const OrderListResults = () => {
                 ? (
                   <>
                     <TableCell align="left">
-                      Id
+                      Code
                     </TableCell>
                     <TableCell align="left">
                       Created At
@@ -179,7 +179,7 @@ const OrderListResults = () => {
                       Customer Info
                     </TableCell>
                     <TableCell align="left">
-                      Order Total
+                      Order Total ($)
                     </TableCell>
                     <TableCell align="left">
                       Status
@@ -275,7 +275,7 @@ const OrderListResults = () => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {order._id}
+                        {order.code}
                       </Typography>
                     </Link>
                   </Box>

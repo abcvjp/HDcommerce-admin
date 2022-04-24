@@ -24,9 +24,9 @@ const orderApi = {
     const url = '/search';
     return API.get(url + convertObjToQuery(cleanObj(query)));
   },
-  confirmOrder: (id) => API.patch(`/order/${id}/confirm`),
-  cancelOrder: (id) => API.patch(`/order/${id}/cancel`),
-  completeOrder: (id) => API.patch(`/order/${id}/complete`)
+  confirmOrder: (id) => API.get(`/order/${id}/confirm`),
+  cancelOrder: (id) => API.get(`/order/${id}/cancel`),
+  completeOrder: (id) => API.get(`/order/${id}/complete`)
 };
 
 export default orderApi;
