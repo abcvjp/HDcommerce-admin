@@ -6,6 +6,7 @@ const productApi = {
     const url = '/product';
     return API.get(url + convertObjToQuery(cleanObj(query)));
   },
+  getOne: (id) => API.get(`/product/${id}?includeCategory=true`),
   deleteProduct: (id) => API.delete(`/product/${id}`),
   deleteProducts: (productIds) => API.delete('/product', {
     data: { productIds }

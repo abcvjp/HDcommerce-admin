@@ -11,9 +11,11 @@ import {
   DialogContent,
   DialogContentText,
   FormControlLabel,
-  Checkbox
+  Checkbox,
+  DialogActions
 } from '@material-ui/core';
 
+import { useNavigate } from 'react-router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -23,6 +25,7 @@ import { categoryApi } from '../../utils/api';
 
 const EditCategoryForm = ({ categoryId }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [categories] = useCategories();
   const [state, setState] = useState({
     category: null,
@@ -36,12 +39,18 @@ const EditCategoryForm = ({ categoryId }) => {
   const handleResultClose = () => {
     setState((prevState) => ({ ...prevState, isOpenResult: false }));
   };
+  const handleContinue = () => {
+    navigate(0, { replace: true });
+  };
+  const handleBackToList = () => {
+    navigate('/management/category');
+  };
 
   useEffect(() => {
     if (categories.length > 0) {
       setState((prevState) => ({
         ...prevState,
-        category: categories.find((category) => category.id === categoryId)
+        category: categories.find((category) => category._id === categoryId)
       }));
     }
   }, [categories]);
@@ -53,7 +62,7 @@ const EditCategoryForm = ({ categoryId }) => {
     await categoryApi.editCategory(categoryId, { ...values }).then((res) => res.data).then(() => {
       handleResultOpen();
     }).catch((err) => {
-      setState((prevState) => ({ ...prevState, error: err.response ? err.response.data.error.message : err.message }));
+      setState((prevState) => ({ ...prevState, error: err.response ? err.response.data.message : err.message }));
     });
     dispatch(closeFullScreenLoading());
   };
@@ -74,7 +83,7 @@ const EditCategoryForm = ({ categoryId }) => {
           </Box>
           {state.error && (
             <Box mb={2}>
-              <Typography color="secondary">
+              <Typography color="red">
                 Error:
                 {' '}
                 {state.error}
@@ -84,27 +93,27 @@ const EditCategoryForm = ({ categoryId }) => {
           <Formik
             initialValues={{
               name: category.name,
-              parent_id: category.parent_id || '',
+              parentId: category.parentId || '',
               description: category.description,
-              published: true,
-              meta_title: category.meta_title,
-              meta_description: category.meta_description || '',
-              meta_keywords: category.meta_keywords || ''
+              isPublic: true,
+              metaTitle: category.metaTitle,
+              metaDescription: category.metaDescription || '',
+              metaKeywords: category.metaKeywords || ''
             }}
             validationSchema={Yup.object().shape({
               name: Yup.string().trim().min(1).max(50)
                 .required('Category name is required'),
               description: Yup.string().trim().min(20).max(255)
                 .required('Category description is required'),
-              parent_id: Yup.string().uuid().nullable(),
-              published: Yup.boolean().required(),
-              meta_title: Yup.string().trim().min(1).max(150)
+              parentId: Yup.string().nullable(),
+              isPublic: Yup.boolean().required(),
+              metaTitle: Yup.string().trim().min(1).max(150)
                 .required('Meta title is required'),
-              meta_description: Yup.string()
+              metaDescription: Yup.string()
                 .nullable(true).trim()
                 .min(20)
                 .max(255),
-              meta_keywords: Yup.string()
+              metaKeywords: Yup.string()
                 .nullable(true).trim()
                 .min(1)
                 .max(150)
@@ -137,22 +146,22 @@ const EditCategoryForm = ({ categoryId }) => {
                   required
                 />
                 <TextField
-                  error={Boolean(touched.parent_id && errors.parent_id)}
-                  helperText={touched.parent_id && errors.parent_id}
+                  error={Boolean(touched.parentId && errors.parentId)}
+                  helperText={touched.parentId && errors.parentId}
                   label="Parent Category"
                   margin="normal"
                   fullWidth
-                  name="parent_id"
+                  name="parentId"
                   select
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.parent_id}
+                  value={values.parentId}
                   variant="outlined"
                   disabled
                 >
                   {categories.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.path}
+                    <MenuItem key={item._id} value={item._id}>
+                      {item.path.join(' -> ')}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -175,52 +184,52 @@ const EditCategoryForm = ({ categoryId }) => {
                 <FormControlLabel
                   control={(
                     <Checkbox
-                      checked={values.published}
+                      checked={values.isPublic}
                       onChange={handleChange}
                       margin="normal"
-                      name="published"
+                      name="isPublic"
                     />
                   )}
                   label="Published?"
                 />
                 <TextField
-                  error={Boolean(touched.meta_title && errors.meta_title)}
+                  error={Boolean(touched.metaTitle && errors.metaTitle)}
                   fullWidth
-                  helperText={touched.meta_title && errors.meta_title}
+                  helperText={touched.metaTitle && errors.metaTitle}
                   label="Meta title"
                   margin="normal"
-                  name="meta_title"
+                  name="metaTitle"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="meta_title"
-                  value={values.meta_title}
+                  type="metaTitle"
+                  value={values.metaTitle}
                   variant="outlined"
                   required
                 />
                 <TextField
-                  error={Boolean(touched.meta_description && errors.meta_description)}
+                  error={Boolean(touched.metaDescription && errors.metaDescription)}
                   fullWidth
-                  helperText={touched.meta_description && errors.meta_description}
+                  helperText={touched.metaDescription && errors.metaDescription}
                   label="Meta description"
                   margin="normal"
-                  name="meta_description"
+                  name="metaDescription"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="meta_description"
-                  value={values.meta_description || ''}
+                  type="metaDescription"
+                  value={values.metaDescription || ''}
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.meta_keywords && errors.meta_keywords)}
+                  error={Boolean(touched.metaKeywords && errors.metaKeywords)}
                   fullWidth
-                  helperText={touched.meta_keywords && errors.meta_keywords}
+                  helperText={touched.metaKeywords && errors.metaKeywords}
                   label="Meta keywords"
                   margin="normal"
-                  name="meta_keywords"
+                  name="metaKeywords"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="meta_keyword"
-                  value={values.meta_keywords || ''}
+                  value={values.metaKeywords || ''}
                   variant="outlined"
                 />
                 <Box sx={{ py: 2 }}>
@@ -243,6 +252,22 @@ const EditCategoryForm = ({ categoryId }) => {
                 Category is updated successfully
               </DialogContentText>
             </DialogContent>
+            <DialogActions>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={handleContinue}
+              >
+                Continue edit category
+              </Button>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={handleBackToList}
+              >
+                Back to product list
+              </Button>
+            </DialogActions>
           </Dialog>
         </Paper>
       ) : <></>

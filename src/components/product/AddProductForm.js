@@ -67,11 +67,12 @@ const AddProductForm = () => {
       const imageURLs = await uploadImages(images);
       await productApi.createProduct({
         ...values,
-        images: imageURLs.map((url, i) => ({
-          url,
-          alt: images[i].alt === '' ? null : images[i].alt,
-          title: images[i].title === '' ? null : images[i].title,
-        }))
+        images: imageURLs
+        // ({
+        // url,
+        // alt: images[i].alt === '' ? null : images[i].alt,
+        // title: images[i].title === '' ? null : images[i].title,
+        // })
       });
       handleResultOpen();
     } catch (err) {
@@ -83,40 +84,40 @@ const AddProductForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      enable: true,
-      published: true,
+      isEnabled: true,
+      isPublic: true,
       name: '',
-      category_id: '',
+      categoryId: '',
       title: '',
       price: '',
-      root_price: '',
-      quantity: '',
-      short_description: '',
+      originalPrice: '',
+      stockQuantity: '',
+      shortDescription: '',
       description: '',
-      meta_title: '',
-      meta_description: '',
-      meta_keywords: ''
+      metaTitle: '',
+      metaDescription: '',
+      metaKeywords: ''
     },
     validationSchema: Yup.object().shape({
-      enable: Yup.boolean(),
-      published: Yup.boolean(),
+      isEnabled: Yup.boolean(),
+      isPublic: Yup.boolean(),
       name: Yup.string().trim().min(1).max(200)
         .required('Name is required'),
-      category_id: Yup.string().uuid().required('Cateogory is required'),
+      categoryId: Yup.string().required('Cateogory is required'),
       title: Yup.string().trim().min(1).max(255)
         .required('Title is requried'),
       price: Yup.number().positive().min(0).required('Price is required'),
-      root_price: Yup.number().positive().min(0).required('Root price is required'),
-      quantity: Yup.number().integer().positive().min(1)
+      originalPrice: Yup.number().positive().min(0).required('Root price is required'),
+      stockQuantity: Yup.number().integer().positive().min(1)
         .required('Quantity is required'),
-      short_description: Yup.string().trim().min(20).max(300)
+      shortDescription: Yup.string().trim().min(20).max(300)
         .required('Short description is required'),
       description: Yup.string().min(20).required('Description is required'),
-      meta_title: Yup.string().trim().min(1).max(150)
+      metaTitle: Yup.string().trim().min(1).max(150)
         .required('Meta title is required'),
-      meta_description: Yup.string().trim().min(20).max(255)
+      metaDescription: Yup.string().trim().min(20).max(255)
         .nullable(true),
-      meta_keywords: Yup.string().trim().min(1).max(150)
+      metaKeywords: Yup.string().trim().min(1).max(150)
         .nullable(true)
     }),
     onSubmit: async (values) => {
@@ -187,21 +188,21 @@ const AddProductForm = () => {
             required
           />
           <TextField
-            error={Boolean(touched.category_id && errors.category_id)}
-            helperText={touched.category_id && errors.category_id}
+            error={Boolean(touched.categoryId && errors.categoryId)}
+            helperText={touched.categoryId && errors.categoryId}
             label="Category"
             margin="normal"
             fullWidth
-            name="category_id"
+            name="categoryId"
             select
             onBlur={handleBlur}
             onChange={handleChange}
-            value={values.category_id}
+            value={values.categoryId}
             variant="outlined"
             required
           >
             {categories.map((category) => (
-              <MenuItem key={category.id} value={category.id}>
+              <MenuItem key={category._id} value={category._id}>
                 {category.path}
               </MenuItem>
             ))}
@@ -224,46 +225,46 @@ const AddProductForm = () => {
             </Grid>
             <Grid item>
               <TextField
-                error={Boolean(touched.root_price && errors.root_price)}
-                helperText={touched.root_price && errors.root_price}
+                error={Boolean(touched.originalPrice && errors.originalPrice)}
+                helperText={touched.originalPrice && errors.originalPrice}
                 label="Root Price"
                 margin="normal"
                 type="number"
-                name="root_price"
+                name="originalPrice"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.root_price}
+                value={values.originalPrice}
                 variant="outlined"
                 required
               />
             </Grid>
             <Grid item>
               <TextField
-                error={Boolean(touched.quantity && errors.quantity)}
-                helperText={touched.quantity && errors.quantity}
-                label="Quantity"
+                error={Boolean(touched.stockQuantity && errors.stockQuantity)}
+                helperText={touched.stockQuantity && errors.stockQuantity}
+                label="Stock quantity"
                 margin="normal"
                 type="number"
-                name="quantity"
+                name="stockQuantity"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.quantity}
+                value={values.stockQuantity}
                 variant="outlined"
                 required
               />
             </Grid>
           </Grid>
           <TextField
-            error={Boolean(touched.short_description && errors.short_description)}
+            error={Boolean(touched.shortDescription && errors.shortDescription)}
             fullWidth
-            helperText={touched.short_description && errors.short_description}
+            helperText={touched.shortDescription && errors.shortDescription}
             label="Short Description"
             margin="normal"
-            name="short_description"
+            name="shortDescription"
             onBlur={handleBlur}
             onChange={handleChange}
-            type="short_description"
-            value={values.short_description}
+            type="shortDescription"
+            value={values.shortDescription}
             variant="outlined"
             multiline
             minRows={3}
@@ -283,64 +284,64 @@ const AddProductForm = () => {
           <FormControlLabel
             control={(
               <Checkbox
-                checked={values.enable}
+                checked={values.isEnabled}
                 onChange={handleChange}
                 margin="normal"
-                name="enable"
+                name="isEnabled?"
               />
             )}
-            label="Enable?"
+            label="Enabled?"
           />
           <FormControlLabel
             control={(
               <Checkbox
-                checked={values.published}
+                checked={values.isPublic}
                 onChange={handleChange}
                 margin="normal"
-                name="published"
+                name="isPublic"
               />
             )}
-            label="Publish?"
+            label="Public?"
           />
 
           <TextField
-            error={Boolean(touched.meta_title && errors.meta_title)}
+            error={Boolean(touched.metaTitle && errors.metaTitle)}
             fullWidth
-            helperText={touched.meta_title && errors.meta_title}
+            helperText={touched.metaTitle && errors.metaTitle}
             label="Meta title"
             margin="normal"
-            name="meta_title"
+            name="metaTitle"
             onBlur={handleBlur}
             onChange={handleChange}
-            type="meta_title"
-            value={values.meta_title}
+            type="metaTitle"
+            value={values.metaTitle}
             variant="outlined"
             required
           />
           <TextField
-            error={Boolean(touched.meta_description && errors.meta_description)}
+            error={Boolean(touched.metaDescription && errors.metaDescription)}
             fullWidth
-            helperText={touched.meta_description && errors.meta_description}
+            helperText={touched.metaDescription && errors.metaDescription}
             label="Meta description"
             margin="normal"
-            name="meta_description"
+            name="metaDescription"
             onBlur={handleBlur}
             onChange={handleChange}
-            type="meta_description"
-            value={values.meta_description}
+            type="metaDescription"
+            value={values.metaDescription}
             variant="outlined"
           />
           <TextField
-            error={Boolean(touched.meta_keywords && errors.meta_keywords)}
+            error={Boolean(touched.metaKeywords && errors.metaKeywords)}
             fullWidth
-            helperText={touched.meta_keywords && errors.meta_keywords}
+            helperText={touched.metaKeywords && errors.metaKeywords}
             label="Meta keywords"
             margin="normal"
-            name="meta_keywords"
+            name="metaKeywords"
             onBlur={handleBlur}
             onChange={handleChange}
             type="meta_keyword"
-            value={values.meta_keywords}
+            value={values.metaKeywords}
             variant="outlined"
           />
         </Paper>

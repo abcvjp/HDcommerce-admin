@@ -76,25 +76,25 @@ const CreateCategoryForm = () => {
       <Formik
         initialValues={{
           name: '',
-          parent_id: '',
+          parentId: '',
           description: '',
-          published: true,
-          meta_title: '',
-          meta_description: '',
-          meta_keywords: ''
+          isPublic: true,
+          metaTitle: '',
+          metaDescription: '',
+          metaKeywords: ''
         }}
         validationSchema={Yup.object().shape({
           name: Yup.string().trim().min(1).max(50)
             .required('Category name is required'),
           description: Yup.string().trim().min(20).max(255)
             .required('Category description is required'),
-          parent_id: Yup.string().uuid().nullable(),
-          published: Yup.boolean().required(),
-          meta_title: Yup.string().trim().min(1).max(150)
+          parentId: Yup.string().nullable(),
+          isPublic: Yup.boolean().required(),
+          metaTitle: Yup.string().trim().min(1).max(150)
             .required('Meta title is required'),
-          meta_description: Yup.string().trim().min(20).max(255)
+          metaDescription: Yup.string().trim().min(20).max(255)
             .nullable(),
-          meta_keywords: Yup.string().trim().min(1).max(150)
+          metaKeywords: Yup.string().trim().min(1).max(150)
             .lowercase()
             .nullable()
         })}
@@ -125,21 +125,21 @@ const CreateCategoryForm = () => {
               required
             />
             <TextField
-              error={Boolean(touched.parent_id && errors.parent_id)}
-              helperText={touched.parent_id && errors.parent_id}
+              error={Boolean(touched.parentId && errors.parentId)}
+              helperText={touched.parentId && errors.parentId}
               label="Parent Category"
               margin="normal"
               fullWidth
-              name="parent_id"
+              name="parentId"
               select
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.parent_id}
+              value={values.parentId}
               variant="outlined"
             >
               {categories.map((category) => (
-                <MenuItem key={category.id} value={category.id}>
-                  {category.path}
+                <MenuItem key={category._id} value={category._id}>
+                  {category.path.join(' -> ')}
                 </MenuItem>
               ))}
             </TextField>
@@ -162,52 +162,52 @@ const CreateCategoryForm = () => {
             <FormControlLabel
               control={(
                 <Checkbox
-                  checked={values.published}
+                  checked={values.isPublic}
                   onChange={handleChange}
                   margin="normal"
-                  name="published"
+                  name="isPublic"
                 />
               )}
               label="Published?"
             />
             <TextField
-              error={Boolean(touched.meta_title && errors.meta_title)}
+              error={Boolean(touched.metaTitle && errors.metaTitle)}
               fullWidth
-              helperText={touched.meta_title && errors.meta_title}
+              helperText={touched.metaTitle && errors.metaTitle}
               label="Meta title"
               margin="normal"
-              name="meta_title"
+              name="metaTitle"
               onBlur={handleBlur}
               onChange={handleChange}
-              type="meta_title"
-              value={values.meta_title}
+              type="metaTitle"
+              value={values.metaTitle}
               variant="outlined"
               required
             />
             <TextField
-              error={Boolean(touched.meta_description && errors.meta_description)}
+              error={Boolean(touched.metaDescription && errors.metaDescription)}
               fullWidth
-              helperText={touched.meta_description && errors.meta_description}
+              helperText={touched.metaDescription && errors.metaDescription}
               label="Meta description"
               margin="normal"
-              name="meta_description"
+              name="metaDescription"
               onBlur={handleBlur}
               onChange={handleChange}
-              type="meta_description"
-              value={values.meta_description}
+              type="metaDescription"
+              value={values.metaDescription}
               variant="outlined"
             />
             <TextField
-              error={Boolean(touched.meta_keywords && errors.meta_keywords)}
+              error={Boolean(touched.metaKeywords && errors.metaKeywords)}
               fullWidth
-              helperText={touched.meta_keywords && errors.meta_keywords}
+              helperText={touched.metaKeywords && errors.metaKeywords}
               label="Meta keywords"
               margin="normal"
-              name="meta_keywords"
+              name="metaKeywords"
               onBlur={handleBlur}
               onChange={handleChange}
               type="meta_keyword"
-              value={values.meta_keywords}
+              value={values.metaKeywords}
               variant="outlined"
             />
             <Box sx={{ py: 2 }}>

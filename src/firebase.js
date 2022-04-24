@@ -23,7 +23,7 @@ export const uploadProductImages = async (images) => {
     const getDownloadURLs = [];
     const promises = [];
     images.forEach((image, index) => {
-      const uploadTask = firebase.storage().ref().child(`/product-images/${image.name}`).put(image.file);
+      const uploadTask = firebase.storage().ref().child(`/product/${image.name}`).put(image.file);
       promises.push(uploadTask);
       uploadTask.on(
         firebase.storage.TaskEvent.STATE_CHANGED,

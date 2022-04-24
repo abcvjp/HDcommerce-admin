@@ -39,7 +39,7 @@ const OrderActions = ({
             _id: orderId,
             status: 'Completed',
             paymentStatus: 'Paid',
-            deliveryStatus: 'SUCCESS'
+            deliveryStatus: 'Success'
           }
         });
       }
