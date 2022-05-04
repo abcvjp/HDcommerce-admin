@@ -13,8 +13,8 @@ const userApi = {
   },
   updateUserInfo: (id, data) => API.put(`/user/${id}`, cleanObj(data)),
   resetPassword: (id, data) => API.post(`/user/${id}/reset-password`, cleanObj(data)),
-  enableUser: (id) => API.post(`/user/${id}/enable`),
-  disableUser: (id) => API.post(`/user/${id}/disable`)
+  enableUser: (id) => API.patch(`/user/${id}/enable`),
+  disableUser: (id) => API.patch(`/user/${id}/disable`)
 };
 
 export default userApi;

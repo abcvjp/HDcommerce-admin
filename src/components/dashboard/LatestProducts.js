@@ -15,6 +15,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { productApi } from 'src/utils/api';
 import { useEffect, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import moment from 'moment';
 
 // const products = [
@@ -108,6 +109,8 @@ const LatestProducts = (props) => {
           endIcon={<ArrowRightIcon />}
           size="small"
           variant="text"
+          component={RouterLink}
+          to="/management/product"
         >
           View all
         </Button>

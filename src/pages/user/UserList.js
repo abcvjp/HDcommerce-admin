@@ -81,7 +81,7 @@ function userListReducer(state, action) {
       return {
         ...state,
         users: state.users.map((i) => {
-          if (i.id === action.user.id) {
+          if (i._id === action.user._id) {
             return { ...i, ...action.user };
           } return i;
         })

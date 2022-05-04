@@ -23,7 +23,7 @@ const UserActions = ({
         await userApi.enableUser(userId);
         dispatch({
           type: 'UPDATE_USER',
-          user: { id: userId, enable: true }
+          user: { _id: userId, isEnabled: true }
         });
       }
     }));
@@ -36,8 +36,8 @@ const UserActions = ({
         dispatch({
           type: 'UPDATE_USER',
           user: {
-            id: userId,
-            enable: false
+            _id: userId,
+            isEnabled: false
           }
         });
       }

@@ -66,8 +66,8 @@ const EditUserForm = ({ userId }) => {
               color="textPrimary"
               variant="h2"
             >
-              {`Edit User Info for '
-                    ${user.full_name}
+              {`Edit info for '
+                    ${user.email}
                     '`}
             </Typography>
           </Box>
@@ -82,17 +82,15 @@ const EditUserForm = ({ userId }) => {
           )}
           <Formik
             initialValues={{
-              username: user.username || '',
-              full_name: user.full_name || '',
+              fullName: user.fullName || '',
               email: user.email,
-              phone_number: user.phone_number || '',
-              enable: user.enable
+              phoneNumber: user.phoneNumber || '',
+              isEnabled: user.isEnabled
             }}
             validationSchema={Yup.object().shape({
-              username: Yup.string().min(4).max(20).required('Username is required'),
-              full_name: Yup.string().min(1).max(50).required('Full name is required'),
+              fullName: Yup.string().min(1).max(50).required('Full name is required'),
               email: Yup.string().min(1).max(50).email('Email is invalid'),
-              phone_number: Yup.string().length(10).matches(/^[0-9]+$/, 'Phone number is not valid').length(10)
+              phoneNumber: Yup.string().min(10)
                 .required('Phone number is required')
             })}
             onSubmit={onSubmit}
@@ -112,29 +110,14 @@ const EditUserForm = ({ userId }) => {
                   fullWidth
                   variant="outlined"
                   margin="normal"
-                  key="username"
-                  label="User name"
-                  error={Boolean(touched.username && errors.username)}
-                  helperText={touched.username && errors.username}
-                  name="username"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.username}
-                  required
-                />
-                <TextField
-                  InputLabelProps={{ shrink: true, color: 'primary' }}
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  key="full_name"
+                  key="fullName"
                   label="Full name"
-                  error={Boolean(touched.full_name && errors.full_name)}
-                  helperText={touched.full_name && errors.full_name}
-                  name="full_name"
+                  error={Boolean(touched.fullName && errors.fullName)}
+                  helperText={touched.fullName && errors.fullName}
+                  name="fullName"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.full_name}
+                  value={values.fullName}
                   required
                 />
 
@@ -159,26 +142,26 @@ const EditUserForm = ({ userId }) => {
                   fullWidth
                   variant="outlined"
                   margin="normal"
-                  key="phone_number"
+                  key="phoneNumber"
                   label="Phone number"
-                  error={Boolean(touched.phone_number && errors.phone_number)}
-                  helperText={touched.phone_number && errors.phone_number}
-                  name="phone_number"
+                  error={Boolean(touched.phoneNumber && errors.phoneNumber)}
+                  helperText={touched.phoneNumber && errors.phoneNumber}
+                  name="phoneNumber"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.phone_number}
+                  value={values.phoneNumber}
                   required
                 />
                 <FormControlLabel
                   control={(
                     <Checkbox
-                      checked={values.enable}
+                      checked={values.isEnabled}
                       onChange={handleChange}
                       margin="normal"
-                      name="enable"
+                      name="isEnabled"
                     />
                   )}
-                  label="Enable?"
+                  label="Enabled?"
                 />
                 <Box sx={{ py: 2 }}>
                   <Button

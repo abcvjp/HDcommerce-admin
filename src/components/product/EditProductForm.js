@@ -51,7 +51,7 @@ const EditProductForm = ({ productId }) => {
           url: image.url,
           alt: image.alt,
           title: image.title
-        }))
+        })),
       });
       setState((prev) => ({
         ...prev,
