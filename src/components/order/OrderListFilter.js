@@ -11,9 +11,9 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
-const statuses = ['Pending', 'Handling', 'Completed', 'Canceled'];
+const statuses = ['Creating', 'Pending', 'Handling', 'Completed', 'Canceled', 'Failed'];
 const paymentStatuses = ['Unpaid', 'Paid'];
-const shippingStatuses = ['Undelivered', 'Delivering', 'Successfully delivered', 'Delivery failed'];
+const shippingStatuses = ['Undelivered', 'Delivering', 'Success', 'Delivery failed'];
 
 const useStyles = makeStyles(() => ({
   field: {
@@ -32,9 +32,9 @@ const OrderListFilter = () => {
         fullName: Yup.string().trim().min(1).max(100),
         email: Yup.string().trim().email(),
         phoneNumber: Yup.string().length(10).matches(/^[0-9]+$/),
-        status: Yup.mixed().oneOf(['Pending', 'Handling', 'Completed', 'Canceled']),
+        status: Yup.mixed().oneOf(['Creating', 'Pending', 'Handling', 'Completed', 'Canceled', 'Failed']),
         paymentStatus: Yup.mixed().oneOf(['Unpaid', 'Paid']),
-        shippingStatus: Yup.mixed().oneOf(['Undelivered', 'Delivering', 'Successfully delivered', 'Delivery failed']),
+        shippingStatus: Yup.mixed().oneOf(['Undelivered', 'Delivering', 'Success', 'Delivery failed']),
         startDate: Yup.date(),
         endDate: Yup.date()
       })}

@@ -21,12 +21,12 @@ import { Search as SearchIcon, RefreshCcw as RefreshIcon, X } from 'react-feathe
 
 const sortOptions = [
   { name: 'Newest', value: '-createdAt' },
-  { name: 'Oldest', value: '+createdAt' },
-  { name: 'Price (Low to High)', value: '+price' },
+  { name: 'Oldest', value: 'createdAt' },
+  { name: 'Price (Low to High)', value: 'price' },
   { name: 'Price (High to Low)', value: '-price' },
   { name: 'Discount', value: '-discount' },
   { name: 'Best Selling', value: '-sold' },
-  { name: 'Quantity (Low to High)', value: '+stockQuantity' },
+  { name: 'Quantity (Low to High)', value: 'stockQuantity' },
   { name: 'Quantity (High to Low)', value: '-stockQuantity' }
 ];
 

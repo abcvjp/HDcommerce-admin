@@ -21,9 +21,9 @@ import OrderListFilter from './OrderListFilter';
 
 const sortOptions = [
   { name: 'Newest', value: '-createdAt' },
-  { name: 'Oldest', value: '+createdAt' },
+  { name: 'Oldest', value: 'createdAt' },
   { name: 'Updated recenly', value: '-updatedAt' },
-  { name: 'Total (Low to High)', value: '+orderTotal' },
+  { name: 'Total (Low to High)', value: 'orderTotal' },
   { name: 'Total (High to Low)', value: '-orderTotal' },
 ];
 
