@@ -11,7 +11,7 @@ const userApi = {
     const url = '/user';
     return API.get(url + convertObjToQuery(cleanObj(query)));
   },
-  updateUserInfo: (id, data) => API.put(`/user/${id}`, cleanObj(data)),
+  updateUserInfo: (data) => API.put('/user/me', cleanObj(data)),
   resetPassword: (id, data) => API.post(`/user/${id}/reset-password`, cleanObj(data)),
   enableUser: (id) => API.patch(`/user/${id}/enable`),
   disableUser: (id) => API.patch(`/user/${id}/disable`)

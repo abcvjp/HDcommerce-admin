@@ -22,7 +22,7 @@ const AccountProfileDetails = () => {
 
   const user = useSelector((state) => state.user);
   const {
-    id, username, full_name, email, phone_number
+    fullName, email, phoneNumber
   } = user;
   const [state, setState] = useState({
     errorMessage: null,
@@ -31,23 +31,21 @@ const AccountProfileDetails = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: username || '',
-      full_name: full_name || '',
+      fullName: fullName || '',
       email,
-      phone_number: phone_number || ''
+      phoneNumber: phoneNumber || ''
     },
     validationSchema: Yup.object().shape({
-      username: Yup.string().min(4).max(20).required('Username is required'),
-      full_name: Yup.string().min(1).max(50).required('Full name is required'),
+      fullName: Yup.string().min(1).max(50).required('Full name is required'),
       email: Yup.string().min(1).max(50).email('Email is invalid'),
-      phone_number: Yup.string().length(10).matches(/^[0-9]+$/, 'Phone number is not valid').length(10)
+      phoneNumber: Yup.string().min(10)
         .required('Phone number is required'),
     }),
     onSubmit: async (values) => {
       dispatch(openFullScreenLoading());
       try {
-        const response = await userApi.updateUserInfo(id, values);
-        dispatch(setUser(response.data.result));
+        const response = await userApi.updateUserInfo(values);
+        dispatch(setUser(response.data.data));
         setState({ successMessage: 'Updated user information successfully', errorMessage: null });
       } catch (err) {
         console.log(err);
@@ -96,35 +94,14 @@ const AccountProfileDetails = () => {
               fullWidth
               variant="outlined"
               margin="normal"
-              key="username"
-              label="User name"
-              error={Boolean(touched.username && errors.username)}
-              helperText={touched.username && errors.username}
-              name="username"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.username}
-              required
-            />
-          </Grid>
-          <Grid
-            item
-            md={6}
-            xs={12}
-          >
-            <TextField
-              InputLabelProps={{ shrink: true, color: 'primary' }}
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              key="full_name"
+              key="fullName"
               label="Full name"
-              error={Boolean(touched.full_name && errors.full_name)}
-              helperText={touched.full_name && errors.full_name}
-              name="full_name"
+              error={Boolean(touched.fullName && errors.fullName)}
+              helperText={touched.fullName && errors.fullName}
+              name="fullName"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.full_name}
+              value={values.fullName}
               required
             />
           </Grid>
@@ -159,14 +136,14 @@ const AccountProfileDetails = () => {
               fullWidth
               variant="outlined"
               margin="normal"
-              key="phone_number"
+              key="phoneNumber"
               label="Phone number"
-              error={Boolean(touched.phone_number && errors.phone_number)}
-              helperText={touched.phone_number && errors.phone_number}
-              name="phone_number"
+              error={Boolean(touched.phoneNumber && errors.phoneNumber)}
+              helperText={touched.phoneNumber && errors.phoneNumber}
+              name="phoneNumber"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.phone_number}
+              value={values.phoneNumber}
               required
             />
           </Grid>
