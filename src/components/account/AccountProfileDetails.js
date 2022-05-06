@@ -10,36 +10,43 @@ import {
   CardHeader,
   Divider,
   Grid,
+  MenuItem,
   TextField,
   Typography
 } from '@material-ui/core';
 import { closeFullScreenLoading, openFullScreenLoading } from 'src/actions/fullscreenLoading';
 import { userApi } from 'src/utils/api';
 import { setUser } from 'src/actions/user';
+import { find } from 'lodash';
+import moment from 'moment';
 
+const genders = [{ name: 'Male', value: 1 }, { name: 'Female', value: 2 }, { name: 'Other', value: 3 }];
 const AccountProfileDetails = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
   const {
-    fullName, email, phoneNumber
+    fullName, email, phoneNumber, gender, birthDay
   } = user;
   const [state, setState] = useState({
     errorMessage: null,
     successMessage: null
   });
-
   const formik = useFormik({
     initialValues: {
       fullName: fullName || '',
       email,
-      phoneNumber: phoneNumber || ''
+      phoneNumber: phoneNumber || '',
+      gender: find(genders, { value: gender }).value,
+      birthDay: moment(birthDay).format('YYYY-MM-DD')
     },
     validationSchema: Yup.object().shape({
       fullName: Yup.string().min(1).max(50).required('Full name is required'),
       email: Yup.string().min(1).max(50).email('Email is invalid'),
       phoneNumber: Yup.string().min(10)
         .required('Phone number is required'),
+      gender: Yup.mixed().oneOf([1, 2, 3]),
+      birthDay: Yup.date(),
     }),
     onSubmit: async (values) => {
       dispatch(openFullScreenLoading());
@@ -147,7 +154,54 @@ const AccountProfileDetails = () => {
               required
             />
           </Grid>
-
+          <Grid
+            item
+            md={6}
+            xs={12}
+          >
+            <TextField
+              InputLabelProps={{ shrink: true, color: 'primary' }}
+              fullWidth
+              error={Boolean(touched.gender && errors.gender)}
+              helperText={touched.gender && errors.gender}
+              label="Gender"
+              name="gender"
+              margin="normal"
+              select
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.gender}
+              variant="outlined"
+              required
+            >
+              <MenuItem key="All" value="">All</MenuItem>
+              {genders.map((e) => (
+                <MenuItem key={e.name} value={e.value}>
+                  {e.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid
+            item
+            md={6}
+            xs={12}
+          >
+            <TextField
+              error={Boolean(touched.birthDay && errors.birthDay)}
+              helperText={touched.birthDay && errors.birthDay}
+              label="Birthday"
+              name="birthDay"
+              type="date"
+              margin="normal"
+              fullWidth
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.birthDay}
+              variant="outlined"
+              InputLabelProps={{ shrink: true, color: 'primary' }}
+            />
+          </Grid>
         </Grid>
       </CardContent>
       <Divider />
