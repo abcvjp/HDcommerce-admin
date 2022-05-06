@@ -20,8 +20,8 @@ import { CSVLink } from 'react-csv';
 
 const publishedOptions = [
   { name: 'All', value: '' },
-  { name: 'Published', value: true },
-  { name: 'Unpublished', value: false }
+  { name: 'Published', value: 1 },
+  { name: 'Unpublished', value: 0 }
 ];
 
 const createHeader = (label, key) => ({ label, key });

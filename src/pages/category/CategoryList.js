@@ -132,6 +132,7 @@ const CategoryList = () => {
         ...state.filters,
         sort: state.sort
       };
+      console.log(queryParams);
       if (state.searchValue && state.searchValue.length > 4) {
         queryParams.keyword = state.searchValue;
       }
