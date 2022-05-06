@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { OrderListContext } from 'src/utils/contexts';
-import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -83,15 +82,6 @@ const OrderListToolbar = () => {
           onClick={() => dispatch({ type: 'REFRESH' })}
         >
           <RefreshIcon />
-        </Button>
-        <Button
-          key="add product"
-          color="primary"
-          variant="contained"
-          component={RouterLink}
-          to="add"
-        >
-          Add order
         </Button>
       </Box>
       <Box key={2} sx={{ mt: 3 }}>
