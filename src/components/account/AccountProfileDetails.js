@@ -174,7 +174,6 @@ const AccountProfileDetails = () => {
               variant="outlined"
               required
             >
-              <MenuItem key="All" value="">All</MenuItem>
               {genders.map((e) => (
                 <MenuItem key={e.name} value={e.value}>
                   {e.name}

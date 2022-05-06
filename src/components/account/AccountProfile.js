@@ -1,5 +1,6 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import { v4 as uuid } from 'uuid';
 import {
   Avatar,
   Box,
@@ -10,9 +11,29 @@ import {
   Divider,
   Typography
 } from '@material-ui/core';
+import { useState } from 'react';
+import { uploadImages } from 'src/utils/imageUploader';
+import { userApi } from 'src/utils/api';
+import { setUser } from 'src/actions/user';
+import { Upload } from 'react-feather';
+import { closeFullScreenLoading, openFullScreenLoading } from 'src/actions/fullscreenLoading';
 
 const AccountProfile = (props) => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const [avatarFile, setAvatarFile] = useState(null);
+  const handleUploadAvatar = async () => {
+    dispatch(openFullScreenLoading());
+    try {
+      const [avatarUrl] = await uploadImages([avatarFile]);
+      const response = await userApi.updateUserInfo({ avatar: avatarUrl });
+      dispatch(setUser(response.data.data));
+    } catch (err) {
+      console.log(err);
+    }
+    dispatch(closeFullScreenLoading());
+  };
+  console.log(avatarFile);
   return (
     <Card {...props}>
       <CardContent>
@@ -24,7 +45,7 @@ const AccountProfile = (props) => {
           }}
         >
           <Avatar
-            src={user.avatar}
+            src={avatarFile ? URL.createObjectURL(avatarFile.file) : user.avatar}
             sx={{
               height: 100,
               width: 100
@@ -43,9 +64,25 @@ const AccountProfile = (props) => {
       </CardContent>
       <Divider />
       <CardActions>
-        <Button color="primary" fullWidth variant="text">
-          Upload picture
-        </Button>
+        {avatarFile ? (
+          <Button color="primary" fullWidth variant="contained" disableElevation endIcon={<Upload />} onClick={handleUploadAvatar}>
+            UPLOAD NEW AVATAR
+          </Button>
+        ) : (
+          <Button color="primary" fullWidth variant="text" component="label">
+            CHOOSE PICTURE
+            <input
+              type="file"
+              accept=".jpg,.png"
+              hidden
+              onChange={(e) => {
+                const file = e.target.files[0];
+                const name = `${uuid()}.${file.name.split('.').pop()}`;
+                setAvatarFile({ file, name });
+              }}
+            />
+          </Button>
+        )}
       </CardActions>
     </Card>
   );
