@@ -84,28 +84,28 @@ const ReportOrderResult = () => {
               </TableCell>
               <>
                 <TableCell>
-                  Time
+                  Time Unit
                 </TableCell>
                 <TableCell>
-                  Orders Number
+                  Orders
                 </TableCell>
                 <TableCell>
                   Completed Orders
                 </TableCell>
                 <TableCell>
-                  Item Total
+                  Products
                 </TableCell>
                 <TableCell>
-                  Items Number
-                </TableCell>
-                <TableCell>
-                  Shipping fee
+                  Items
                 </TableCell>
                 <TableCell>
                   Order Total
                 </TableCell>
                 <TableCell>
-                  Profit (expected)
+                  Delivery fee
+                </TableCell>
+                <TableCell>
+                  Revenue
                 </TableCell>
               </>
             </TableRow>
@@ -115,42 +115,41 @@ const ReportOrderResult = () => {
               <TableRow
                 hover
                 key={report.id}
-                selected={selectedReportIds.indexOf(report.id) !== -1}
+                selected={selectedReportIds.indexOf(report._id) !== -1}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedReportIds.indexOf(report.id) !== -1}
-                    onChange={(event) => handleSelectOne(event, report.id)}
+                    checked={selectedReportIds.indexOf(report._id) !== -1}
+                    onChange={(event) => handleSelectOne(event, report._id)}
                     value="true"
                   />
                 </TableCell>
                 <TableCell>
-                  {report.time}
+                  {report._id}
                 </TableCell>
                 <TableCell>
-                  {report.orders_number}
+                  {report.orderNumber}
                 </TableCell>
                 <TableCell>
-                  {report.completed_orders_number}
+                  {report.completedOrder}
                 </TableCell>
                 <TableCell>
-                  $
-                  {report.item_total}
+                  {report.productNumber}
                 </TableCell>
                 <TableCell>
-                  {report.items_number}
-                </TableCell>
-                <TableCell>
-                  $
-                  {report.shipping_fee}
+                  {report.itemNumber}
                 </TableCell>
                 <TableCell>
                   $
-                  {report.order_total}
+                  {report.orderTotal}
                 </TableCell>
                 <TableCell>
                   $
-                  {report.expected_profit}
+                  {report.deliveryFee}
+                </TableCell>
+                <TableCell>
+                  $
+                  {report.revenue}
                 </TableCell>
               </TableRow>
             ))}

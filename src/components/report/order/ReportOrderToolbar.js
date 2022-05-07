@@ -17,11 +17,11 @@ import { RefreshCcw as RefreshIcon } from 'react-feather';
 import { CSVLink } from 'react-csv';
 
 const sortOptions = [
-  { name: 'Newest', value: 'day.desc' },
-  { name: 'Oldest', value: 'day.asc' },
-  { name: 'Updated recenly', value: 'updatedAt.desc' },
-  { name: 'Total (Low to High)', value: 'order_total.asc' },
-  { name: 'Total (High to Low)', value: 'order_total.desc' },
+  { name: 'Newest', value: 'day' },
+  { name: 'Oldest', value: '-day' },
+  { name: 'Updated recently', value: '-updatedAt' },
+  { name: 'Total (Low to High)', value: 'orderTotal' },
+  { name: 'Total (High to Low)', value: '-orderTotal' },
 ];
 
 const groupByOptions = [
@@ -33,14 +33,14 @@ const groupByOptions = [
 
 const createHeader = (label, key) => ({ label, key });
 const exportFileHeaders = [
-  createHeader('Time', 'time'),
-  createHeader('Number of orders', 'orders_number'),
-  createHeader('Number of completed orders', 'completed_orders_number'),
-  createHeader('Number of items', 'items_number'),
-  createHeader('Item total ($)', 'item_total'),
-  createHeader('Shipping fee total ($)', 'shipping_fee'),
-  createHeader('Order total ($)', 'order_total'),
-  createHeader('Expected profit ($)', 'expected_profit')
+  createHeader('Time unit', '_id'),
+  createHeader('Number of orders', 'orderNumber'),
+  createHeader('Number of completed orders', 'completedOrder'),
+  createHeader('Number of items', 'itemNumber'),
+  // createHeader('Item total ($)', 'item_total'),
+  createHeader('Delivery fee total ($)', 'deliveryFee'),
+  createHeader('Order total ($)', 'orderTotal'),
+  createHeader('Revenue', 'revenue')
 ];
 
 const ReportOrderToolbar = () => {
@@ -97,8 +97,8 @@ const ReportOrderToolbar = () => {
                 <Formik
                   initialValues={{ ...state.filters }}
                   validationSchema={Yup.object().shape({
-                    start_date: Yup.date(),
-                    end_date: Yup.date()
+                    startDate: Yup.date(),
+                    endDate: Yup.date()
                   })}
                   onSubmit={(values) => dispatch({ type: 'SET_FILTERS', filters: values })}
                 >
@@ -112,38 +112,38 @@ const ReportOrderToolbar = () => {
                   }) => (
                     <form onSubmit={handleSubmit}>
                       <Grid container justifyContent="flex-start" wrap="wrap" spacing={2}>
-                        <Grid item key="start_date">
+                        <Grid item key="startDate">
                           <TextField
-                            error={Boolean(touched.start_date && errors.start_date)}
-                            helperText={touched.start_date && errors.start_date}
+                            error={Boolean(touched.startDate && errors.startDate)}
+                            helperText={touched.startDate && errors.startDate}
                             label="Start Date"
-                            name="start_date"
+                            name="startDate"
                             type="date"
                             margin="normal"
                             size="small"
                             fullWidth
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.start_date}
+                            value={values.startDate}
                             variant="outlined"
                             InputLabelProps={{
                               shrink: true,
                             }}
                           />
                         </Grid>
-                        <Grid item key="end_date">
+                        <Grid item key="endDate">
                           <TextField
-                            error={Boolean(touched.end_date && errors.end_date)}
-                            helperText={touched.end_date && errors.end_date}
+                            error={Boolean(touched.endDate && errors.endDate)}
+                            helperText={touched.endDate && errors.endDate}
                             label="End Date"
-                            name="end_date"
+                            name="endDate"
                             type="date"
                             margin="normal"
                             size="small"
                             fullWidth
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.end_date}
+                            value={values.endDate}
                             variant="outlined"
                             InputLabelProps={{
                               shrink: true,
@@ -182,7 +182,7 @@ const ReportOrderToolbar = () => {
                 <InputLabel>Group By</InputLabel>
                 <Select
                   native
-                  value={state.group_by}
+                  value={state.type}
                   onChange={handleGroupByChange}
                 >
                   {

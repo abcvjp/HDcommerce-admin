@@ -14,10 +14,10 @@ const initialState = {
   count: 10,
   triggerFetch: Date.now(),
   filters: {
-    start_date: '',
-    end_date: ''
+    startDate: '',
+    endDate: ''
   },
-  group_by: 'day',
+  type: 'day',
   sort: '',
   isLoading: false
 };
@@ -50,7 +50,7 @@ function reportOrderReducer(state, action) {
     case 'CHANGE_GROUP_BY':
       return {
         ...state,
-        group_by: action.groupBy
+        type: action.groupBy
       };
     case 'SET_REPORTS':
       return {
@@ -115,16 +115,16 @@ const ReportOrder = () => {
       const { filters } = state;
       try {
         const response = await reportApi.getOrderReport({
-          current_page: state.currentPage + 1,
-          page_size: state.pageSize,
+          skip: state.currentPage * state.pageSize,
+          limit: state.pageSize,
           ...filters,
-          group_by: state.group_by,
+          type: state.type,
           sort: state.sort
         });
         dispatch({
           type: 'SET_REPORTS',
-          reports: response.data.data,
-          count: response.data.pagination.count
+          reports: response.data.data.records,
+          count: response.data.data.count
         });
       } catch (err) {
         console.log('fetch report order error');
@@ -132,7 +132,7 @@ const ReportOrder = () => {
       dispatch({ type: 'SET_UNLOADING' });
     };
     fetchReports();
-  }, [state.pageSize, state.currentPage, state.filters, state.sort, state.group_by, state.triggerFetch]);
+  }, [state.pageSize, state.currentPage, state.filters, state.sort, state.type, state.triggerFetch]);
   return (
     <Page
       title="Order Reports"
