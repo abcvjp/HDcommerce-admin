@@ -7,6 +7,7 @@ import {
   Card,
   CardHeader,
   Divider,
+  Link,
   Table,
   TableBody,
   TableCell,
@@ -58,7 +59,12 @@ const LatestOrders = () => {
                 key={order._id}
               >
                 <TableCell>
-                  {order.code}
+                  <Link
+                    component={RouterLink}
+                    to={`/management/order/${order._id}`}
+                  >
+                    {order.code}
+                  </Link>
                 </TableCell>
                 <TableCell>
                   {order.customerInfo.name}

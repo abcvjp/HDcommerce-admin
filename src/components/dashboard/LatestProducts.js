@@ -6,6 +6,7 @@ import {
   CardHeader,
   Divider,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemAvatar,
@@ -84,7 +85,14 @@ const LatestProducts = (props) => {
               />
             </ListItemAvatar>
             <ListItemText
-              primary={product.name}
+              primary={(
+                <Link
+                  component={RouterLink}
+                  to={`/management/product/${product._id}/edit`}
+                >
+                  {product.name}
+                </Link>
+          )}
               secondary={`Updated ${moment(product.updatedAt).fromNow()}`}
             />
             <IconButton
