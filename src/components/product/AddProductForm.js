@@ -67,12 +67,11 @@ const AddProductForm = () => {
       const imageURLs = await uploadImages(images);
       await productApi.createProduct({
         ...values,
-        images: imageURLs
-        // ({
-        // url,
-        // alt: images[i].alt === '' ? null : images[i].alt,
-        // title: images[i].title === '' ? null : images[i].title,
-        // })
+        images: imageURLs.map((url, i) => ({
+          url,
+          alt: images[i].alt === '' ? null : images[i].alt,
+          title: images[i].title === '' ? null : images[i].title,
+        }))
       });
       handleResultOpen();
     } catch (err) {
