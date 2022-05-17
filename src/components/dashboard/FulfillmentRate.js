@@ -9,11 +9,11 @@ import {
 } from '@material-ui/core';
 import { orange } from '@material-ui/core/colors';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
+import PropTypes from 'prop-types';
 
-const TasksProgress = (props) => (
+const FulfillmentRate = ({ data }) => (
   <Card
     sx={{ height: '100%' }}
-    {...props}
   >
     <CardContent>
       <Grid
@@ -27,13 +27,14 @@ const TasksProgress = (props) => (
             gutterBottom
             variant="h6"
           >
-            TASKS PROGRESS
+            FULFILLMENT RATE
           </Typography>
           <Typography
             color="textPrimary"
             variant="h3"
           >
-            75.5%
+            {data}
+            %
           </Typography>
         </Grid>
         <Grid item>
@@ -50,7 +51,7 @@ const TasksProgress = (props) => (
       </Grid>
       <Box sx={{ pt: 3 }}>
         <LinearProgress
-          value={75.5}
+          value={data}
           variant="determinate"
         />
       </Box>
@@ -58,4 +59,8 @@ const TasksProgress = (props) => (
   </Card>
 );
 
-export default TasksProgress;
+FulfillmentRate.propTypes = {
+  data: PropTypes.number.isRequired
+};
+
+export default FulfillmentRate;

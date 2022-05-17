@@ -89,6 +89,7 @@ const LatestProducts = (props) => {
                 <Link
                   component={RouterLink}
                   to={`/management/product/${product._id}/edit`}
+                  underline="none"
                 >
                   {product.name}
                 </Link>

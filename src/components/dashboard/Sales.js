@@ -7,29 +7,48 @@ import {
   CardHeader,
   Divider,
   useTheme,
-  colors
+  colors,
+  Link
 } from '@material-ui/core';
 import moment from 'moment';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
 
-const Sales = (props) => {
+const Sales = ({ data }) => {
   const theme = useTheme();
 
-  const data = {
+  // const data = {
+  // datasets: [
+  // {
+  // backgroundColor: colors.indigo[500],
+  // data: [18, 5, 19, 27, 29, 19, 20],
+  // label: 'This year'
+  // },
+  // {
+  // backgroundColor: colors.grey[200],
+  // data: [11, 20, 12, 29, 30, 25, 13],
+  // label: 'Last year'
+  // }
+  // ],
+  // labels: [1, 2, 3, 4, 5, 6, 7].map((i) => moment().weekday(i).format('DD/MM'))
+  // };
+
+  const saleData = {
     datasets: [
       {
         backgroundColor: colors.indigo[500],
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'This year'
+        data: data.map((e) => e.orderNumber),
+        label: 'Orders number'
       },
       {
-        backgroundColor: colors.grey[200],
-        data: [11, 20, 12, 29, 30, 25, 13],
-        label: 'Last year'
-      }
+        backgroundColor: colors.green[500],
+        data: data.map((e) => e.completedOrder),
+        label: 'Completed orders number'
+      },
     ],
-    labels: [1, 2, 3, 4, 5, 6, 7].map((i) => moment().weekday(i).format('DD/MM'))
+    labels: data.map((e) => moment(e.day).format('DD/MM'))
   };
 
   const options = {
@@ -88,7 +107,7 @@ const Sales = (props) => {
   };
 
   return (
-    <Card {...props}>
+    <Card>
       <CardHeader
         action={(
           <Button
@@ -110,7 +129,7 @@ const Sales = (props) => {
           }}
         >
           <Bar
-            data={data}
+            data={saleData}
             options={options}
           />
         </Box>
@@ -129,11 +148,16 @@ const Sales = (props) => {
           size="small"
           variant="text"
         >
-          Overview
+          <Link component={RouterLink} to="/report/order" underline="none">
+            Overview
+          </Link>
         </Button>
       </Box>
     </Card>
   );
+};
+Sales.propTypes = {
+  data: PropTypes.array.isRequired
 };
 
 export default Sales;

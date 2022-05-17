@@ -62,6 +62,7 @@ const LatestOrders = () => {
                   <Link
                     component={RouterLink}
                     to={`/management/order/${order._id}`}
+                    underline="none"
                   >
                     {order.code}
                   </Link>

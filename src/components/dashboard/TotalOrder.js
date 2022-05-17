@@ -7,13 +7,14 @@ import {
   Typography
 } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MoneyIcon from '@material-ui/icons/Money';
-import { red } from '@material-ui/core/colors';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import { red, green } from '@material-ui/core/colors';
+import PropTypes from 'prop-types';
+import { Sell } from '@material-ui/icons';
 
-const Budget = (props) => (
+const TotalOrder = ({ data }) => (
   <Card
     sx={{ height: '100%' }}
-    {...props}
   >
     <CardContent>
       <Grid
@@ -27,13 +28,13 @@ const Budget = (props) => (
             gutterBottom
             variant="h6"
           >
-            BUDGET
+            NEW ORDERS
           </Typography>
           <Typography
             color="textPrimary"
             variant="h3"
           >
-            $24,000
+            {data.now}
           </Typography>
         </Grid>
         <Grid item>
@@ -44,7 +45,7 @@ const Budget = (props) => (
               width: 56
             }}
           >
-            <MoneyIcon />
+            <Sell />
           </Avatar>
         </Grid>
       </Grid>
@@ -55,15 +56,16 @@ const Budget = (props) => (
           alignItems: 'center'
         }}
       >
-        <ArrowDownwardIcon sx={{ color: red[900] }} />
+        {(data.now < data.before) ? <ArrowDownwardIcon sx={{ color: red[900] }} /> : <ArrowUpwardIcon sx={{ color: green[900] }} />}
         <Typography
           sx={{
-            color: red[900],
+            color: (data.now < data.before) ? red[900] : green[900],
             mr: 1
           }}
           variant="body2"
         >
-          12%
+          {parseInt(((data.now - data.before) * 100) / data.before, 10)}
+          %
         </Typography>
         <Typography
           color="textSecondary"
@@ -75,5 +77,11 @@ const Budget = (props) => (
     </CardContent>
   </Card>
 );
+TotalOrder.propTypes = {
+  data: PropTypes.shape({
+    now: PropTypes.number.isRequired,
+    before: PropTypes.number.isRequired,
+  })
+};
 
-export default Budget;
+export default TotalOrder;
