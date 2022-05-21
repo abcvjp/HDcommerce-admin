@@ -220,7 +220,7 @@ const CategoryListResults = () => {
                       component={RouterLink}
                       size="small"
                       to={`${category._id}/edit`}
-                      variant="outlined"
+                      variant="contained"
                     >
                       Edit
                     </Button>

@@ -61,7 +61,7 @@ const OrderActions = ({
     navigate(orderId);
   };
   return (
-    <ButtonGroup color="primary" aria-label="outlined primary button group">
+    <ButtonGroup variant="contained" size="small" color="primary" aria-label="outlined primary button group">
       <Button onClick={handleViewOrder}>
         View
       </Button>

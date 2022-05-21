@@ -47,7 +47,7 @@ const UserActions = ({
     navigate(`${userId}/edit`);
   };
   return (
-    <ButtonGroup color="primary" aria-label="outlined primary button group">
+    <ButtonGroup color="primary" variant="contained" size="small" aria-label="outlined primary button group">
       <Button onClick={handleEditUser}>
         Edit
       </Button>

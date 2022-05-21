@@ -45,7 +45,7 @@ const LatestOrders = () => {
                 Date
               </TableCell>
               <TableCell>
-                Total
+                Total ($)
               </TableCell>
               <TableCell>
                 Status

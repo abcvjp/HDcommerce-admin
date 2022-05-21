@@ -156,7 +156,7 @@ const ProductListResults = () => {
                       Published
                     </TableCell>
                     <TableCell>
-                      Price
+                      Price ($)
                     </TableCell>
                     <TableCell>
                       Quantity
@@ -274,7 +274,7 @@ const ProductListResults = () => {
                       component={RouterLink}
                       size="small"
                       to={`${product._id}/edit`}
-                      variant="outlined"
+                      variant="contained"
                     >
                       Edit
                     </Button>
