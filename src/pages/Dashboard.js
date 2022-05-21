@@ -9,8 +9,6 @@ import LatestOrders from 'src/components/dashboard//LatestOrders';
 import LatestProducts from 'src/components/dashboard//LatestProducts';
 import Sales from 'src/components/dashboard//Sales';
 import FulfillmentRate from 'src/components/dashboard/FulfillmentRate';
-import TotalProfit from 'src/components/dashboard//TotalProfit';
-import TrafficByDevice from 'src/components/dashboard//TrafficByDevice';
 import { useEffect, useState } from 'react';
 import reportApi from 'src/utils/api/reportApi';
 import TotalOrder from 'src/components/dashboard/TotalOrder';
@@ -59,9 +57,9 @@ const Dashboard = () => {
           >
             <Grid
               item
-              lg={3}
+              lg={4}
               sm={6}
-              xl={3}
+              xl={4}
               xs={12}
             >
               {saleData.months.length > 1 && (
@@ -74,9 +72,9 @@ const Dashboard = () => {
             </Grid>
             <Grid
               item
-              lg={3}
+              lg={4}
               sm={6}
-              xl={3}
+              xl={4}
               xs={12}
             >
               {saleData.months.length > 1 && (
@@ -89,9 +87,9 @@ const Dashboard = () => {
             </Grid>
             <Grid
               item
-              lg={3}
+              lg={4}
               sm={6}
-              xl={3}
+              xl={4}
               xs={12}
             >
               {saleData.months.length > 1 && (
@@ -100,31 +98,13 @@ const Dashboard = () => {
             </Grid>
             <Grid
               item
-              lg={3}
-              sm={6}
-              xl={3}
-              xs={12}
-            >
-              <TotalProfit sx={{ height: '100%' }} />
-            </Grid>
-            <Grid
-              item
               lg={8}
               md={12}
-              xl={9}
+              xl={8}
               xs={12}
             >
               {saleData.days
               && <Sales data={saleData.days} />}
-            </Grid>
-            <Grid
-              item
-              lg={4}
-              md={6}
-              xl={3}
-              xs={12}
-            >
-              <TrafficByDevice sx={{ height: '100%' }} />
             </Grid>
             <Grid
               item

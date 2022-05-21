@@ -56,7 +56,7 @@ const LatestProducts = (props) => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await productApi.getAll({ limit: 7 });
+      const response = await productApi.getAll({ limit: 5 });
       setProducts(response.data.data.records);
     };
     fetchProducts();
