@@ -34,11 +34,12 @@ const groupByOptions = [
 const createHeader = (label, key) => ({ label, key });
 const exportFileHeaders = [
   createHeader('Time unit', '_id'),
-  createHeader('Number of orders', 'orderNumber'),
-  createHeader('Number of completed orders', 'completedOrder'),
-  createHeader('Number of items', 'itemNumber'),
+  createHeader('Orders number', 'orderNumber'),
+  createHeader('Completed orders number', 'completedOrder'),
+  createHeader('Failed orders number', 'failedOrder'),
+  createHeader('Items number', 'itemNumber'),
   // createHeader('Item total ($)', 'item_total'),
-  createHeader('Delivery fee total ($)', 'deliveryFee'),
+  createHeader('Delivery fee ($)', 'deliveryFee'),
   createHeader('Order total ($)', 'orderTotal'),
   createHeader('Revenue', 'revenue')
 ];

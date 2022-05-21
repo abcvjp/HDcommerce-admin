@@ -26,16 +26,16 @@ const publishedOptions = [
 
 const createHeader = (label, key) => ({ label, key });
 const exportFileHeaders = [
-  createHeader('Id', 'id'),
+  createHeader('Id', '_id'),
   createHeader('Name', 'name'),
-  createHeader('Parent id', 'parent_id'),
+  createHeader('Parent id', 'parentId'),
   createHeader('Path', 'path'),
   createHeader('Slug', 'slug'),
-  createHeader('Published', 'published'),
+  createHeader('Published', 'isPublic'),
   createHeader('Description', 'description'),
-  createHeader('Meta title', 'meta_title'),
-  createHeader('Meta description', 'meta_description'),
-  createHeader('Meta keywords', 'meta_keywords'),
+  createHeader('Meta title', 'metaTitle'),
+  createHeader('Meta description', 'metaDescription'),
+  createHeader('Meta keywords', 'metaKeywords'),
   createHeader('Created at', 'createdAt'),
   createHeader('Last update', 'updatedAt')
 ];
@@ -77,7 +77,7 @@ const CategoryListToolbar = (props) => {
         <CSVLink
           headers={exportFileHeaders}
           data={state.categories}
-          filename="products.csv"
+          filename="categories.csv"
         >
           <Button key="export" sx={{ mx: 1 }}>
             Export

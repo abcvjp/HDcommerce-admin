@@ -27,13 +27,14 @@ const sortOptions = [
 
 const createHeader = (label, key) => ({ label, key });
 const exportFileHeaders = [
-  createHeader('Id', 'id'),
+  createHeader('Id', '_id'),
   createHeader('Role', 'role'),
-  createHeader('Enable', 'enable'),
-  createHeader('Username', 'username'),
+  createHeader('Enable', 'isEnabled'),
   createHeader('Email', 'email'),
-  createHeader('Full name', 'full_name'),
-  createHeader('Phone number', 'phone_number'),
+  createHeader('Full name', 'fullName'),
+  createHeader('Phone number', 'phoneNumber'),
+  createHeader('Gender', 'gender'),
+  createHeader('Birthday', 'birthDay'),
   createHeader('Avatar', 'avatar'),
   createHeader('Created at', 'createdAt'),
   createHeader('Last update', 'updatedAt')
