@@ -93,7 +93,7 @@ const CreateCategoryForm = () => {
           metaTitle: Yup.string().trim().min(1).max(150)
             .required('Meta title is required'),
           metaDescription: Yup.string().trim().min(20).max(255)
-            .nullable(),
+            .required('Meta description is required'),
           metaKeywords: Yup.string().trim().min(1).max(150)
             .lowercase()
             .nullable()
