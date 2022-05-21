@@ -16,7 +16,9 @@ import {
   DialogContentText,
   FormControlLabel,
   Checkbox,
-  DialogActions
+  DialogActions,
+  Tabs,
+  Tab
 } from '@material-ui/core';
 
 import { useCategories } from 'src/utils/customHooks';
@@ -27,6 +29,7 @@ import { uploadImages } from 'src/utils/imageUploader';
 
 import { closeFullScreenLoading, openFullScreenLoading } from 'src/actions/fullscreenLoading';
 import { isArrayEmpty } from 'src/utils/functions';
+import { yellow } from '@material-ui/core/colors';
 import ProductUploadImage from './ProductUploadImage';
 import ProductImageList from './ProductImageList';
 import RichEditor from '../RichEditor';
@@ -41,7 +44,12 @@ const EditProductForm = ({ productId }) => {
     error: null,
     isOpenResult: false
   });
+  const [tab, setTab] = useState(1);
   const { product } = state;
+
+  const handleChangeTab = (event, newValue) => {
+    setTab(newValue);
+  };
 
   const handleUpdateImages = async (newImages) => {
     dispatch(openFullScreenLoading());
@@ -120,6 +128,16 @@ const EditProductForm = ({ productId }) => {
   return (
     product && (
       <>
+        <Box sx={{
+          marginBottom: 2, width: '100%', display: 'flex', justifyContent: 'center'
+        }}
+        >
+          <Typography
+            variant="h3"
+          >
+            Edit product
+          </Typography>
+        </Box>
         <Formik
           initialValues={{
             isEnabled: product.isEnabled,
@@ -182,16 +200,21 @@ const EditProductForm = ({ productId }) => {
                   </Typography>
                 </Box>
               )}
-              <Paper sx={{ padding: 2 }}>
-                <Box sx={{ mb: 2 }}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h3"
-                  >
-                    Product Information
-                  </Typography>
-                </Box>
 
+              <Box sx={{ bgcolor: yellow[600], color: 'white' }}>
+                <Tabs
+                  value={tab}
+                  onChange={handleChangeTab}
+                  indicatorColor="primary"
+                  textColor="primary"
+                >
+                  <Tab value={1} label="PRODUCT INFORMATION" />
+                  <Tab value={2} label="PRODUCT IMAGES" />
+                </Tabs>
+              </Box>
+
+              {(tab === 1) && (
+              <Paper sx={{ padding: 2, marginTop: 0 }} elevation={0}>
                 <TextField
                   error={Boolean(touched.name && errors.name)}
                   fullWidth
@@ -389,15 +412,9 @@ const EditProductForm = ({ productId }) => {
                   </Button>
                 </Box>
               </Paper>
-              <Paper sx={{ my: 4, padding: 2 }}>
-                <Box sx={{ mb: 2 }}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h3"
-                  >
-                    Product Images
-                  </Typography>
-                </Box>
+              )}
+              {(tab === 2) && (
+              <Paper sx={{ padding: 2, marginTop: 0 }} elevation={0}>
                 <Box mb={2}>
                   <ProductUploadImage handleAddImages={handleAddImages} />
                   {state.images && !isArrayEmpty(state.images)
@@ -409,6 +426,7 @@ const EditProductForm = ({ productId }) => {
                     )}
                 </Box>
               </Paper>
+              )}
             </form>
           )}
         </Formik>

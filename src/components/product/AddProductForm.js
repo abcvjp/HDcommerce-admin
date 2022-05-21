@@ -17,6 +17,8 @@ import {
   DialogActions,
   FormControlLabel,
   Checkbox,
+  Tabs,
+  Tab,
 } from '@material-ui/core';
 
 import { useCategories } from 'src/utils/customHooks';
@@ -25,6 +27,7 @@ import { productApi } from 'src/utils/api';
 // import { uploadProductImages } from 'src/firebase';
 import { uploadImages } from 'src/utils/imageUploader';
 import { closeFullScreenLoading, openFullScreenLoading } from 'src/actions/fullscreenLoading';
+import { yellow } from '@material-ui/core/colors';
 import ProductImageList from './ProductImageList';
 import ProductUploadImage from './ProductUploadImage';
 import RichEditor from '../RichEditor';
@@ -39,6 +42,11 @@ const AddProductForm = () => {
     error: null,
     isOpenResult: false
   });
+  const [tab, setTab] = useState(1);
+
+  const handleChangeTab = (event, newValue) => {
+    setTab(newValue);
+  };
 
   const handleAddImages = (imagesToUp) => {
     setImages((prev) => ([...prev].concat(imagesToUp.map((i) => ({ ...i, url: URL.createObjectURL(i.file) })))));
@@ -138,6 +146,16 @@ const AddProductForm = () => {
   } = formik;
   return (
     <>
+      <Box sx={{
+        marginBottom: 2, width: '100%', display: 'flex', justifyContent: 'center'
+      }}
+      >
+        <Typography
+          variant="h3"
+        >
+          Add new product
+        </Typography>
+      </Box>
       <form onSubmit={handleSubmit}>
         {state.error && (
           <Box mb={2}>
@@ -148,15 +166,21 @@ const AddProductForm = () => {
             </Typography>
           </Box>
         )}
-        <Paper sx={{ padding: 2 }}>
-          <Box sx={{ mb: 2 }}>
-            <Typography
-              color="textPrimary"
-              variant="h3"
-            >
-              Product Information
-            </Typography>
-          </Box>
+
+        <Box sx={{ bgcolor: yellow[600] }}>
+          <Tabs
+            value={tab}
+            onChange={handleChangeTab}
+            indicatorColor="primary"
+            textColor="primary"
+          >
+            <Tab value={1} label="PRODUCT INFORMATION" />
+            <Tab value={2} label="PRODUCT IMAGES" />
+          </Tabs>
+        </Box>
+
+        {(tab === 1) && (
+        <Paper sx={{ padding: 2, marginTop: 0, marginBottom: 2 }} elevation={0}>
 
           <TextField
             error={Boolean(touched.name && errors.name)}
@@ -344,15 +368,9 @@ const AddProductForm = () => {
             variant="outlined"
           />
         </Paper>
-        <Paper sx={{ my: 4, padding: 2 }}>
-          <Box sx={{ mb: 2 }}>
-            <Typography
-              color="textPrimary"
-              variant="h3"
-            >
-              Product Images
-            </Typography>
-          </Box>
+        )}
+        {(tab === 2) && (
+        <Paper sx={{ padding: 2, marginTop: 0, marginBottom: 2 }} elevation={0}>
           <Box mb={2}>
             <ProductUploadImage handleAddImages={handleAddImages} />
             {images.length > 0
@@ -364,6 +382,7 @@ const AddProductForm = () => {
               )}
           </Box>
         </Paper>
+        )}
         <Box>
           <Button
             color="primary"
