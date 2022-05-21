@@ -49,7 +49,7 @@ const EditUserForm = ({ userId }) => {
 
   const onSubmit = async (values) => {
     dispatch(openFullScreenLoading());
-    await userApi.updateUserInfo(userId, { ...values }).then((res) => res.data).then(() => {
+    await userApi.updateUser(userId, { ...values }).then((res) => res.data).then(() => {
       handleResultOpen();
     }).catch((err) => {
       setState((prevState) => ({ ...prevState, error: err.response ? err.response.data.error.message : err.message }));

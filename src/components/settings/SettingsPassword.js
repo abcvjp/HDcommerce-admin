@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import {
@@ -19,7 +19,6 @@ import { userApi } from 'src/utils/api';
 const SettingsPassword = (props) => {
   const dispatch = useDispatch();
 
-  const userId = useSelector((state) => state.user.id);
   const [state, setState] = useState({
     errorMessage: null,
     successMessage: null
@@ -46,14 +45,14 @@ const SettingsPassword = (props) => {
         onConfirm: async () => {
           dispatch(openFullScreenLoading());
           try {
-            await userApi.resetPassword(userId, {
-              current_password: values.current_password,
-              new_password: values.new_password
+            await userApi.resetPassword({
+              currentPassword: values.current_password,
+              newPassword: values.new_password
             });
             setState({ successMessage: 'Your password is changed successfully', errorMessage: null });
           } catch (err) {
             console.log(err);
-            setState({ successMessage: null, errorMessage: err.response.data.error.message });
+            setState({ successMessage: null, errorMessage: err.response.data.message });
           }
           dispatch(closeFullScreenLoading());
         }
