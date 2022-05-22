@@ -4,9 +4,6 @@
     "es6": true,
     "browser": true
   },
-  "extends": [
-    "airbnb"
-  ],
   "settings": {
     "import/resolver": {
       "node": {
